@@ -1,21 +1,18 @@
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 export const metadata = {
-  title: "Central de Ofertas – Promoções no WhatsApp",
-  description:
-    "Entre no grupo gratuito e receba cupons e descontos da Amazon, Mercado Livre e Shopee direto no seu celular.",
-  openGraph: {
-    title: "Central de Ofertas – Promoções no WhatsApp",
-    description:
-      "Ofertas filtradas todos os dias. Cupons, promoções relâmpago e links seguros.",
-    type: "website",
-  },
+  title: "Central de Ofertas",
+  description: "Promoções reais todos os dias no WhatsApp",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
