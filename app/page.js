@@ -1,8 +1,6 @@
 "use client";
 
-const WHATSAPP_GROUP_URL =
-  process.env.NEXT_PUBLIC_WHATSAPP_GROUP_URL ||
-  "https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD";
+const WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD";
 
 export default function Page() {
   return (
