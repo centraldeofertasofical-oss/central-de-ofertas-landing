@@ -1,8 +1,23 @@
 "use client";
 
+import { useEffect } from "react";
+import { sendEvent } from "../lib/tracking";
+
 const WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD";
 
 export default function Page() {
+  useEffect(() => {
+    sendEvent("page_view");
+  }, []);
+
+  function handleWhatsappClick() {
+    sendEvent("group_click");
+
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "Lead");
+    }
+  }
+
   return (
     <main className="page">
       <section className="hero">
@@ -40,6 +55,7 @@ export default function Page() {
             href={WHATSAPP_GROUP_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleWhatsappClick}
           >
             💬 Acessar grupo de ofertas
           </a>
@@ -107,6 +123,7 @@ export default function Page() {
             href={WHATSAPP_GROUP_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleWhatsappClick}
           >
             💬 Ver ofertas no WhatsApp
           </a>
