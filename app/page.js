@@ -194,10 +194,11 @@ export default function Page() {
         /* AURORA de fundo (colorida, animada) */
         .aurora { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
           background: linear-gradient(160deg, #0f1230 0%, #0c1626 45%, #0a1a1c 100%); }
-        .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55; }
+        .aurora::after { content: ""; position: absolute; inset: 0; background: rgba(8,10,20,.5); }
+        .blob { position: absolute; border-radius: 50%; filter: blur(95px); opacity: .38; }
         .b1 { width: 55vw; height: 55vw; background: #17d15f; top: -18%; left: -14%; animation: d1 22s ease-in-out infinite; }
-        .b2 { width: 52vw; height: 52vw; background: #ffce1f; top: 6%; right: -18%; animation: d2 27s ease-in-out infinite; opacity:.45; }
-        .b3 { width: 46vw; height: 46vw; background: #ff9d2f; bottom: -20%; left: 12%; animation: d3 30s ease-in-out infinite; opacity:.45; }
+        .b2 { width: 52vw; height: 52vw; background: #ffce1f; top: 6%; right: -18%; animation: d2 27s ease-in-out infinite; opacity:.3; }
+        .b3 { width: 46vw; height: 46vw; background: #ff9d2f; bottom: -20%; left: 12%; animation: d3 30s ease-in-out infinite; opacity:.3; }
         .b4 { width: 42vw; height: 42vw; background: #16d19a; bottom: 4%; right: 6%; animation: d4 25s ease-in-out infinite; }
         @keyframes d1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(9vw,7vh) scale(1.15)} }
         @keyframes d2 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-8vw,9vh) scale(1.1)} }
@@ -312,9 +313,9 @@ export default function Page() {
         .fbox p { color: #cdd2dc; font-size: 17px; max-width: 500px; margin: 0 auto 26px; }
 
         /* footer */
-        .foot { position: relative; z-index: 2; border-top: 1.5px solid var(--line); margin-top: 40px; padding: 34px 22px 130px; text-align: center; }
+        .foot { position: relative; z-index: 2; border-top: 1.5px solid var(--line); margin-top: 40px; padding: 34px 22px 130px; text-align: center; background: rgba(7,9,16,.72); }
         .fbrand { display: flex; justify-content: center; margin-bottom: 16px; }
-        .foot p { max-width: 720px; margin: 0 auto; color: #7d8494; font-size: 12.5px; line-height: 1.6; }
+        .foot p { max-width: 720px; margin: 0 auto; color: #aab1bf; font-size: 13px; line-height: 1.65; }
 
         /* float bar */
         .floatBar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
