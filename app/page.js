@@ -171,6 +171,11 @@ export default function Page() {
 
       <footer className="foot">
         <div className="fbrand"><Logo /></div>
+        <div className="footLinks">
+          <a href="/privacidade">Política de Privacidade</a>
+          <span>·</span>
+          <a href="/exclusao-de-dados">Exclusão de dados</a>
+        </div>
         <p>
           Não vendemos produtos. Apenas divulgamos ofertas e cupons de e-commerce por meio de links oficiais das
           plataformas. Este site não é afiliado oficialmente às marcas mencionadas — Amazon, Mercado Livre e Shopee
@@ -315,6 +320,10 @@ export default function Page() {
         /* footer */
         .foot { position: relative; z-index: 2; border-top: 1.5px solid var(--line); margin-top: 40px; padding: 34px 22px 130px; text-align: center; background: rgba(7,9,16,.72); }
         .fbrand { display: flex; justify-content: center; margin-bottom: 16px; }
+        .footLinks { display: flex; justify-content: center; gap: 10px; margin-bottom: 14px; font-size: 13.5px; }
+        .footLinks a { color: #25d366; text-decoration: none; }
+        .footLinks a:hover { text-decoration: underline; }
+        .footLinks span { color: #667; }
         .foot p { max-width: 720px; margin: 0 auto; color: #aab1bf; font-size: 13px; line-height: 1.65; }
 
         /* float bar */
