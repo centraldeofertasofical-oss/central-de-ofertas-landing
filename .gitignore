@@ -1,0 +1,16 @@
+# dependências
+/node_modules
+
+# build do Next
+/.next
+/out
+
+# vercel
+/.vercel
+
+# logs e sistema
+*.log
+.DS_Store
+
+# variáveis de ambiente locais
+.env*.local
