@@ -109,10 +109,10 @@ export default function Page() {
       </header>
 
       {/* LETREIRO DE OFERTAS */}
-      <div className="marquee reveal">
+      <div className="marquee">
         <div className="track">
-          {[...DEALS, ...DEALS].map((d, i) => (
-            <span className="mItem" key={i}>🔥 {d.nome} <b>−{d.off}%</b></span>
+          {[...DEALS, ...DEALS, ...DEALS].map((d, i) => (
+            <span className="mItem" key={i}><i className="mdot" />{d.nome} <b>−{d.off}%</b></span>
           ))}
         </div>
       </div>
@@ -173,7 +173,6 @@ export default function Page() {
       {/* FINAL */}
       <section className="finale reveal">
         <div className="fbox">
-          <div className="fire">🔥</div>
           <h2>As melhores ofertas somem rápido.</h2>
           <p>Entre agora e não perca o próximo achado. Leva 5 segundos e é de graça.</p>
           <CTA label="QUERO ENTRAR NO GRUPO GRÁTIS" className="hot big" />
@@ -269,9 +268,10 @@ export default function Page() {
         .marquee { position: relative; margin: 6px 0 8px; padding: 12px 0; overflow: hidden;
           border-top: 1.5px solid var(--line); border-bottom: 1.5px solid var(--line); background: rgba(255,255,255,.03); }
         .track { display: inline-flex; white-space: nowrap; gap: 34px; animation: roll 32s linear infinite; will-change: transform; }
-        @keyframes roll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-        .mItem { font-size: 14.5px; color: #cfd4e0; }
+        @keyframes roll { from{transform:translateX(0)} to{transform:translateX(-33.333%)} }
+        .mItem { display: inline-flex; align-items: center; gap: 9px; font-size: 14.5px; color: #cfd4e0; }
         .mItem b { color: #ffce33; }
+        .mdot { width: 5px; height: 5px; border-radius: 50%; background: #ffce33; flex-shrink: 0; opacity: .9; }
 
         /* seções */
         .sec { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 62px 20px 6px; }
