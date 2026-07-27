@@ -352,7 +352,8 @@ export default function Page() {
         @media (max-width: 900px) { .deals { grid-template-columns: repeat(2, 1fr); } .steps { grid-template-columns: 1fr; } .spot { display: none; } }
         @media (max-width: 720px) { .floatBar { display: block; } }
         @media (max-width: 480px) { .feats { grid-template-columns: 1fr; } .name { min-height: 38px; font-size: 14px; } .price strong { font-size: 21px; } }
-        @media (prefers-reduced-motion: reduce) { .blob, .cta.hot, .track, .shine, .trust .dot { animation: none !important; } }
+        /* letreiro (.track) segue rolando mesmo com "reduzir movimento" ligado — e um ticker informativo */
+        @media (prefers-reduced-motion: reduce) { .blob, .cta.hot, .shine, .trust .dot { animation: none !important; } }
       `}</style>
     </main>
   );
