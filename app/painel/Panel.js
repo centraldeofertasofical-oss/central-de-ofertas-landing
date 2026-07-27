@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 const money = (n) => "R$ " + (Number(n) || 0).toFixed(2).replace(".", ",");
 
@@ -8,23 +8,48 @@ export default function Panel() {
   const [d, setD] = useState(null);
   const [err, setErr] = useState(null);
   const [ts, setTs] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [pull, setPull] = useState(0);
+  const pullRef = useRef(0);
+  const startY = useRef(0);
+  const pulling = useRef(false);
+
+  const load = useCallback(async () => {
+    const key = new URLSearchParams(window.location.search).get("k") || "";
+    setLoading(true);
+    try {
+      const r = await fetch("/api/painel?k=" + encodeURIComponent(key) + "&_=" + Date.now(), { cache: "no-store" });
+      const j = await r.json();
+      if (!j.ok) setErr(j.erro || "erro");
+      else { setErr(null); setD(j); setTs(new Date()); }
+    } catch (e) { setErr("sem conexão"); }
+    finally { setLoading(false); }
+  }, []);
 
   useEffect(() => {
-    const key = new URLSearchParams(window.location.search).get("k") || "";
-    let alive = true;
-    const load = async () => {
-      try {
-        const r = await fetch("/api/painel?k=" + encodeURIComponent(key), { cache: "no-store" });
-        const j = await r.json();
-        if (!alive) return;
-        if (!j.ok) { setErr(j.erro || "erro"); }
-        else { setErr(null); setD(j); setTs(new Date()); }
-      } catch (e) { if (alive) setErr("sem conexão"); }
-    };
     load();
     const t = setInterval(load, 30000);
-    return () => { alive = false; clearInterval(t); };
-  }, []);
+    return () => clearInterval(t);
+  }, [load]);
+
+  // puxar pra baixo pra atualizar
+  useEffect(() => {
+    const onStart = (e) => { if (window.scrollY <= 0) { startY.current = e.touches[0].clientY; pulling.current = true; } };
+    const onMove = (e) => {
+      if (!pulling.current) return;
+      const dy = e.touches[0].clientY - startY.current;
+      if (dy > 0) { const p = Math.min(dy * 0.5, 80); pullRef.current = p; setPull(p); }
+    };
+    const onEnd = () => { if (pullRef.current > 55) load(); pullRef.current = 0; setPull(0); pulling.current = false; };
+    window.addEventListener("touchstart", onStart, { passive: true });
+    window.addEventListener("touchmove", onMove, { passive: true });
+    window.addEventListener("touchend", onEnd);
+    return () => {
+      window.removeEventListener("touchstart", onStart);
+      window.removeEventListener("touchmove", onMove);
+      window.removeEventListener("touchend", onEnd);
+    };
+  }, [load]);
 
   const tot = d?.tot || { sp: 0, im: 0, cl: 0, lpv: 0, lead: 0, conv: 0 };
   const cpc = tot.conv > 0 ? tot.sp / tot.conv : null;
@@ -33,14 +58,20 @@ export default function Panel() {
   const pill = (st) => {
     if (st === "ACTIVE") return <span className="pill on">ativo</span>;
     if (["IN_PROCESS", "PENDING_REVIEW"].includes(st)) return <span className="pill rev">em análise</span>;
-    return <span className="pill off">{(st || "pausado").toLowerCase()}</span>;
+    return <span className="pill off">pausado</span>;
   };
 
   return (
     <main className="wrap">
+      <div className="ptr" style={{ height: pull }}>
+        <span className={"ico " + (loading ? "spin" : "")}>↻</span>
+        {pull > 55 ? "solte pra atualizar" : pull > 6 ? "puxe pra atualizar" : ""}
+      </div>
+
       <div className="top">
         <span className={"dot " + (err ? "bad" : "ok")} />
         <h1>🎯 Painel — Central de Ofertas</h1>
+        <button className="ref" onClick={load} aria-label="Atualizar"><span className={loading ? "spin" : ""}>↻</span></button>
         <span className="upd">{ts ? "atualizado " + ts.toLocaleTimeString("pt-BR") : "carregando…"}</span>
       </div>
 
@@ -48,7 +79,6 @@ export default function Panel() {
         <div className="erro">
           ⚠️ {err}
           {String(err).toLowerCase().includes("token") && " — o token do Facebook pode ter expirado; renove no PC."}
-          {String(err).toLowerCase().includes("configure") && " — falta configurar as variáveis no Vercel."}
         </div>
       )}
 
@@ -72,18 +102,24 @@ export default function Panel() {
         ))}
       </div>
 
-      <div className="foot">atualiza sozinho a cada 30s · Central de Ofertas</div>
+      <div className="foot">atualiza sozinho a cada 30s · puxe pra baixo ou toque em ↻ · Central de Ofertas</div>
 
       <style jsx global>{`
-        html, body { margin: 0; background: #0d1017; }
+        html, body { margin: 0; background: #0d1017; overscroll-behavior-y: contain; }
       `}</style>
       <style jsx>{`
         .wrap { max-width: 640px; margin: 0 auto; padding: 16px 14px calc(28px + env(safe-area-inset-bottom)); color: #e8edf5; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+        .ptr { display: flex; align-items: center; justify-content: center; gap: 8px; overflow: hidden; color: #8a97ab; font-size: 12.5px; transition: height .12s ease; }
+        .ptr .ico { font-size: 16px; }
         .top { display: flex; align-items: center; gap: 9px; margin-bottom: 16px; flex-wrap: wrap; }
         .top h1 { font-size: 17px; font-weight: 800; margin: 0; flex: 1; }
         .dot { width: 9px; height: 9px; border-radius: 50%; }
         .dot.ok { background: #37d67a; box-shadow: 0 0 10px #37d67a; }
         .dot.bad { background: #ff5d5d; box-shadow: 0 0 10px #ff5d5d; }
+        .ref { background: #1d2431; border: 1px solid #273143; color: #e8edf5; width: 34px; height: 34px; border-radius: 10px; font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
+        .ref:active { background: #273143; }
+        .spin { display: inline-block; animation: sp 0.8s linear infinite; }
+        @keyframes sp { to { transform: rotate(360deg); } }
         .upd { width: 100%; color: #8a97ab; font-size: 12px; }
         .erro { background: rgba(255,93,93,.12); border: 1px solid #ff5d5d; color: #ffb3b3; padding: 10px 13px; border-radius: 11px; margin-bottom: 14px; font-size: 13px; }
         .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
