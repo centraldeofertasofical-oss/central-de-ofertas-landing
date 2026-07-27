@@ -52,12 +52,24 @@ export async function GET(request) {
       (s, a) => ({ sp: s.sp + a.spend, im: s.im + a.impr, cl: s.cl + a.clicks, lpv: s.lpv + a.lpv, lead: s.lead + a.lead, conv: s.conv + a.conversas }),
       { sp: 0, im: 0, cl: 0, lpv: 0, lead: 0, conv: 0 }
     );
+    // dados que o robô empurra do PC (membros do grupo + ações) via KV
+    let robo = null;
+    try {
+      const kvUrl = process.env.KV_REST_API_URL, kvTok = process.env.KV_REST_API_TOKEN;
+      if (kvUrl && kvTok) {
+        const kr = await fetch(kvUrl + "/get/robo:status", { headers: { Authorization: "Bearer " + kvTok }, cache: "no-store" });
+        const kj = await kr.json();
+        if (kj && kj.result) robo = typeof kj.result === "string" ? JSON.parse(kj.result) : kj.result;
+      }
+    } catch (e) {}
+
     return Response.json({
       ok: true,
       ts: Date.now(),
       conta: { nome: acct.name, saldo: (acct.funding_source_details && acct.funding_source_details.display_string) || "", gastoTotal: Number(acct.amount_spent || 0) / 100 },
       ads: ads.filter((a) => a.spend > 0 || a.status === "ACTIVE" || a.status === "IN_PROCESS" || a.status === "PENDING_REVIEW"),
       tot,
+      robo,
     });
   } catch (e) {
     return Response.json({ ok: false, erro: e.message });

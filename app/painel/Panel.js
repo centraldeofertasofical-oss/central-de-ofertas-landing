@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 
 const money = (n) => "R$ " + (Number(n) || 0).toFixed(2).replace(".", ",");
+const haquanto = (ts) => { const m = Math.round((Date.now() - ts) / 60000); if (m < 1) return "agora"; if (m < 60) return "há " + m + " min"; return "há " + Math.round(m / 60) + "h"; };
 
 export default function Panel() {
   const [d, setD] = useState(null);
@@ -85,6 +86,7 @@ export default function Panel() {
       <div className="kpis">
         <div className="kpi"><div className="l">Gasto hoje</div><div className="v">{money(tot.sp)}</div><div className="s">{d?.conta?.saldo || ""}</div></div>
         <div className="kpi hot"><div className="l">Conversas iniciadas</div><div className="v">{tot.conv}</div><div className="s">gente que abriu o chat</div></div>
+        <div className="kpi mem"><div className="l">👥 Membros do grupo</div><div className="v">{d?.robo?.membros != null ? d.robo.membros : "—"}</div><div className="s">{d?.robo?.delta != null ? (d.robo.delta >= 0 ? "+" : "") + d.robo.delta + " desde a última" : "número real no grupo"}</div></div>
         <div className="kpi"><div className="l">Custo / conversa</div><div className="v">{cpc !== null ? money(cpc) : "—"}</div><div className="s">{cpc !== null ? (cpc <= 1 ? "ótimo 🔥" : cpc <= 3 ? "ok" : "caro ⚠️") : "aguardando"}</div></div>
         <div className="kpi"><div className="l">Cliques no anúncio</div><div className="v">{tot.cl}</div><div className="s">{tot.im.toLocaleString("pt-BR")} impressões</div></div>
         <div className="kpi"><div className="l">Leads (landing)</div><div className="v">{tot.lead}</div><div className="s">visitas: {tot.lpv}</div></div>
@@ -100,6 +102,13 @@ export default function Panel() {
             <div className="meta">{money(a.spend)} · {a.conversas} conv {pill(a.status)}</div>
           </div>
         ))}
+      </div>
+
+      <div className="card" style={{ marginTop: 14 }}>
+        <h2>🤖 Ações do robô{d?.robo?.ts ? " · " + haquanto(d.robo.ts) : ""}</h2>
+        {(d?.robo?.acoes && d.robo.acoes.length)
+          ? d.robo.acoes.map((a, i) => <div className="acao" key={i}>{a}</div>)
+          : <div className="muted">Sem ações ainda — o robô só age com dados suficientes (roda a cada 4h). Quando pausar/escalar/avisar, aparece aqui.</div>}
       </div>
 
       <div className="foot">atualiza sozinho a cada 30s · puxe pra baixo ou toque em ↻ · Central de Ofertas</div>
@@ -125,9 +134,13 @@ export default function Panel() {
         .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
         .kpi { background: #161b26; border: 1px solid #273143; border-radius: 14px; padding: 13px 14px; }
         .kpi.hot { border-color: #37d67a; }
+        .kpi.mem { border-color: #4aa3ff; }
         .kpi .l { color: #8a97ab; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; }
         .kpi .v { font-size: 25px; font-weight: 800; margin-top: 3px; }
         .kpi.hot .v { color: #37d67a; }
+        .kpi.mem .v { color: #4aa3ff; }
+        .acao { padding: 8px 0; border-bottom: 1px solid #1d2431; font-size: 13.5px; line-height: 1.4; }
+        .acao:last-child { border-bottom: none; }
         .kpi .s { font-size: 11.5px; color: #8a97ab; margin-top: 2px; }
         .card { background: #161b26; border: 1px solid #273143; border-radius: 16px; padding: 14px; }
         .card h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .6px; color: #8a97ab; margin: 0 0 12px; }
