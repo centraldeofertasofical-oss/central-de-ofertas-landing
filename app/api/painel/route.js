@@ -55,7 +55,8 @@ export async function GET(request) {
     // dados que o robô empurra do PC (membros do grupo + ações) via KV
     let robo = null;
     try {
-      const kvUrl = process.env.KV_REST_API_URL, kvTok = process.env.KV_REST_API_TOKEN;
+      const kvUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+      const kvTok = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
       if (kvUrl && kvTok) {
         const kr = await fetch(kvUrl + "/get/robo:status", { headers: { Authorization: "Bearer " + kvTok }, cache: "no-store" });
         const kj = await kr.json();
