@@ -41,9 +41,17 @@ export default function Page() {
     return () => { io.disconnect(); window.removeEventListener("pointermove", move); };
   }, []);
 
-  function join() {
+  function join(e) {
     sendEvent("group_click");
     if (typeof window !== "undefined" && window.fbq) window.fbq("track", "Lead");
+    // no navegador interno do FB/IG no Android, força abrir o app WhatsApp direto
+    // (pula a tela "Abrir app" que trava na webview)
+    const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
+    if (/FBAN|FBAV|FB_IAB|FBIOS|Instagram/i.test(ua) && /Android/i.test(ua)) {
+      e.preventDefault();
+      window.location.href = `intent://chat.whatsapp.com/${INVITE_CODE}#Intent;scheme=https;package=com.whatsapp;end`;
+      setTimeout(() => { if (!document.hidden) window.location.href = WHATSAPP_GROUP_URL; }, 2000);
+    }
   }
   function tilt(e) {
     const c = e.currentTarget, r = c.getBoundingClientRect();
