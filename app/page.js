@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { sendEvent } from "../lib/tracking";
 import { DEALS } from "./deals";
 
-const WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD";
+const INVITE_CODE = "K7y2RlgUuAc0Xepn0qHYBD";
+const WHATSAPP_GROUP_URL = `https://chat.whatsapp.com/${INVITE_CODE}`;
 
 const PASSOS = [
   { n: "01", t: "Entre no grupo", d: "Um toque e você está dentro. Grátis, sem cadastro." },
@@ -21,9 +22,13 @@ const FEATS = [
 
 export default function Page() {
   const spot = useRef(null);
+  const [inApp, setInApp] = useState(false);
 
   useEffect(() => {
     sendEvent("page_view");
+    // navegador interno do Facebook/Instagram engole o link do WhatsApp -> avisa pra abrir fora
+    const ua = navigator.userAgent || "";
+    if (/FBAN|FBAV|FB_IAB|FBIOS|Instagram|Line\/|MicroMessenger/i.test(ua)) setInApp(true);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) { document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in")); return; }
     const io = new IntersectionObserver(
@@ -51,7 +56,7 @@ export default function Page() {
   function untilt(e) { const c = e.currentTarget; c.style.setProperty("--ry", "0deg"); c.style.setProperty("--rx", "0deg"); }
 
   const CTA = ({ label, className = "" }) => (
-    <a className={`cta ${className}`} href={WHATSAPP_GROUP_URL} target="_blank" rel="noopener noreferrer" onClick={join}>
+    <a className={`cta ${className}`} href={WHATSAPP_GROUP_URL} onClick={join}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm5.6 14.2c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.5-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4 0 .5l-.4.5c-.2.2-.3.4-.1.7.2.4.9 1.4 1.9 2 .8.5 1.1.5 1.4.4.3-.1.5-.5.7-.8.2-.3.4-.2.6-.1l1.7.8c.3.1.5.2.5.4.1.2.1.8-.1 1.2Z"/></svg>
       <span>{label}</span>
       <span className="shine" />
@@ -71,13 +76,19 @@ export default function Page() {
   );
 
   return (
-    <main className="page">
+    <main className={`page${inApp ? " hasWarn" : ""}`}>
       {/* fundo aurora animado + brilho do cursor */}
       <div className="aurora">
         <span className="blob b1" /><span className="blob b2" /><span className="blob b3" /><span className="blob b4" />
         <span className="grid" />
       </div>
       <div ref={spot} className="spot" />
+
+      {inApp && (
+        <div className="iabWarn">
+          ⚠️ <b>Pra entrar no grupo, abra no navegador:</b> toque em <b>⋮</b> (Android) ou <b>⋯ / Compartilhar</b> (iPhone) no canto da tela e escolha <b>“Abrir no Chrome/Safari”</b>. Depois é só tocar em <b>Entrar</b>.
+        </div>
+      )}
 
       <div className="floatBar"><CTA label="Entrar no grupo grátis" className="floatCta" /></div>
 
@@ -330,6 +341,13 @@ export default function Page() {
         .floatBar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
           background: linear-gradient(180deg, transparent, rgba(11,14,28,.95) 36%); display: none; }
         .floatCta { width: 100%; min-height: 58px; }
+
+        /* aviso navegador interno (FB/IG) */
+        .iabWarn { position: fixed; top: 0; left: 0; right: 0; z-index: 60; padding: 11px 16px calc(11px + env(safe-area-inset-top));
+          background: linear-gradient(180deg, #ffd93b, #ffc400); color: #141414; font-size: 13px; line-height: 1.45; text-align: center;
+          box-shadow: 0 4px 22px rgba(0,0,0,.45); }
+        .iabWarn b { font-weight: 800; }
+        .page.hasWarn .hero { padding-top: 92px; }
 
         @media (max-width: 900px) { .deals { grid-template-columns: repeat(2, 1fr); } .steps { grid-template-columns: 1fr; } .spot { display: none; } }
         @media (max-width: 720px) { .floatBar { display: block; } }
