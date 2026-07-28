@@ -26,14 +26,18 @@ async function kvGet(key) {
 }
 
 export async function GET(request) {
-  const k = new URL(request.url).searchParams.get("k");
+  const url = new URL(request.url);
+  const k = url.searchParams.get("k");
+  const PRESETS = { hoje: "today", ontem: "yesterday", "3d": "last_3d", "7d": "last_7d" };
+  const periodo = url.searchParams.get("p") || "hoje";
+  const preset = PRESETS[periodo] || "today";
   if (!TOKEN || !ACCT) return Response.json({ ok: false, erro: "Configure FB_ADS_TOKEN e FB_AD_ACCOUNT_ID no Vercel" });
   if (k !== KEY) return Response.json({ ok: false, erro: "Chave invalida" }, { status: 401 });
   try {
     const acct = await g(ACCT, { fields: "name,amount_spent,balance,funding_source_details" });
     if (acct.error) return Response.json({ ok: false, erro: acct.error.message });
     const adsR = await g(`${ACCT}/ads`, {
-      fields: "name,effective_status,campaign{id,name},insights.date_preset(today){spend,impressions,reach,inline_link_clicks,actions}",
+      fields: `name,effective_status,campaign{id,name},insights.date_preset(${preset}){spend,impressions,reach,inline_link_clicks,actions}`,
       limit: "80",
     });
     const ads = [];
@@ -73,7 +77,7 @@ export async function GET(request) {
       ok: true, ts: Date.now(),
       conta: { nome: acct.name, saldo: (acct.funding_source_details && acct.funding_source_details.display_string) || "", gastoTotal: Number(acct.amount_spent || 0) / 100, balance: Number(acct.balance || 0) / 100, orcamentoDia },
       ads: ads.filter((a) => a.spend > 0 || ["ACTIVE", "IN_PROCESS", "PENDING_REVIEW"].includes(a.status)),
-      tot, campanhas, robo, historia,
+      tot, campanhas, robo, historia, periodo,
     });
   } catch (e) {
     return Response.json({ ok: false, erro: e.message });

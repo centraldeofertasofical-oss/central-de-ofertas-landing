@@ -12,17 +12,18 @@ export default function Panel() {
   const [ts, setTs] = useState(null);
   const [loading, setLoading] = useState(false);
   const [pull, setPull] = useState(0);
+  const [periodo, setPeriodo] = useState("hoje");
   const pullRef = useRef(0), startY = useRef(0), pulling = useRef(false);
 
   const load = useCallback(async () => {
     const key = new URLSearchParams(window.location.search).get("k") || "";
     setLoading(true);
     try {
-      const r = await fetch("/api/painel?k=" + encodeURIComponent(key) + "&_=" + Date.now(), { cache: "no-store" });
+      const r = await fetch("/api/painel?k=" + encodeURIComponent(key) + "&p=" + periodo + "&_=" + Date.now(), { cache: "no-store" });
       const j = await r.json();
       if (!j.ok) setErr(j.erro || "erro"); else { setErr(null); setD(j); setTs(new Date()); }
     } catch (e) { setErr("sem conexão"); } finally { setLoading(false); }
-  }, []);
+  }, [periodo]);
 
   useEffect(() => { load(); const t = setInterval(load, 30000); return () => clearInterval(t); }, [load]);
   useEffect(() => {
@@ -42,6 +43,7 @@ export default function Panel() {
   const campanhas = d?.campanhas || [];
   const cpc = tot.conv > 0 ? tot.sp / tot.conv : null;
   const resultados = tot.conv + tot.lead;
+  const pl = { hoje: "hoje", ontem: "ontem", "3d": "últ. 3 dias", "7d": "últ. 7 dias" }[d?.periodo || periodo] || "período";
   const comCusto = campanhas.filter((c) => c.custoResultado != null);
   const vencedora = comCusto.length ? comCusto.reduce((a, b) => (b.custoResultado < a.custoResultado ? b : a)).nome : null;
 
@@ -86,6 +88,12 @@ export default function Panel() {
       </div>
       <div className="subline">{ts ? "atualizado " + ts.toLocaleTimeString("pt-BR") : "carregando…"}{d?.conta?.saldo ? " · saldo " + d.conta.saldo : ""}</div>
 
+      <div className="peris">
+        {[["hoje", "Hoje"], ["ontem", "Ontem"], ["3d", "3 dias"], ["7d", "7 dias"]].map(([kk, label]) => (
+          <button key={kk} className={"peri " + (periodo === kk ? "on" : "")} onClick={() => setPeriodo(kk)}>{label}</button>
+        ))}
+      </div>
+
       {err && <div className="erro">⚠️ {err}{String(err).toLowerCase().includes("token") ? " — token do Facebook pode ter expirado." : ""}</div>}
 
       {/* HERO */}
@@ -96,7 +104,7 @@ export default function Panel() {
             <div className="hv">{membros != null ? num(membros) : "—"} {robo.delta ? <span className={"hd " + (robo.delta > 0 ? "up" : "dn")}>{robo.delta > 0 ? "+" + robo.delta : robo.delta}</span> : null}</div>
           </div>
           <div className="heroR">
-            <div className="hl">resultados hoje</div>
+            <div className="hl">resultados · {pl}</div>
             <div className="hv2">{resultados}</div>
             <div className="hs">conversas + cliques</div>
           </div>
@@ -109,7 +117,7 @@ export default function Panel() {
         <h2>💰 Custos</h2>
         <div className="cgrid">
           <div className="citem big"><div className="cl">Orçamento / dia</div><div className="cv">{money(d?.conta?.orcamentoDia || 0)}</div></div>
-          <div className="citem"><div className="cl">Gasto hoje</div><div className="cv">{money(tot.sp)}</div></div>
+          <div className="citem"><div className="cl">Gasto {pl}</div><div className="cv">{money(tot.sp)}</div></div>
           <div className="citem"><div className="cl">Gasto total</div><div className="cv">{money(d?.conta?.gastoTotal || 0)}</div></div>
           <div className="citem"><div className="cl">Saldo disponível</div><div className="cv">{d?.conta?.saldo || (d?.conta?.balance != null ? money(d.conta.balance) : "—")}</div></div>
         </div>
@@ -137,7 +145,7 @@ export default function Panel() {
 
       {/* KPIs */}
       <div className="kpis">
-        <div className="kpi"><div className="l">Gasto hoje</div><div className="v">{money(tot.sp)}</div><div className="s">saldo {d?.conta?.balance != null ? money(d.conta.balance) : "—"}</div></div>
+        <div className="kpi"><div className="l">Gasto {pl}</div><div className="v">{money(tot.sp)}</div><div className="s">orçam. {money(d?.conta?.orcamentoDia || 0)}/dia</div></div>
         <div className="kpi hot"><div className="l">Conversas</div><div className="v">{tot.conv}</div><div className="s">abriram o chat</div></div>
         <div className="kpi"><div className="l">Cliques p/ grupo</div><div className="v">{tot.lead}</div><div className="s">na landing</div></div>
         <div className="kpi"><div className="l">Custo / conversa</div><div className="v">{cpc != null ? money(cpc) : "—"}</div><div className="s">{cpc != null ? (cpc <= 1 ? "ótimo 🔥" : cpc <= 3 ? "ok" : "caro ⚠️") : "aguardando"}</div></div>
@@ -147,7 +155,7 @@ export default function Panel() {
 
       {/* FUNIL */}
       <div className="card">
-        <h2>🎯 Funil de hoje</h2>
+        <h2>🎯 Funil · {pl}</h2>
         {funil.map((s, i) => {
           const drop = i > 0 && funil[i - 1].v > 0 ? Math.round((1 - s.v / funil[i - 1].v) * 100) : null;
           return (
@@ -190,7 +198,11 @@ export default function Panel() {
         .ref:active { background: #283449; }
         .spin { display: inline-block; animation: sp .8s linear infinite; }
         @keyframes sp { to { transform: rotate(360deg); } }
-        .subline { color: #8a97ab; font-size: 12px; margin: 3px 0 15px; }
+        .subline { color: #8a97ab; font-size: 12px; margin: 3px 0 10px; }
+        .peris { display: flex; gap: 7px; margin-bottom: 14px; }
+        .peri { flex: 1; background: #131a27; border: 1px solid #232d40; color: #9fb0c9; padding: 8px 4px; border-radius: 10px; font-size: 12.5px; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+        .peri.on { background: #1d3a5f; border-color: #4aa3ff; color: #fff; }
+        .peri:active { opacity: .8; }
         .erro { background: rgba(255,93,93,.12); border: 1px solid #ff5d5d; color: #ffb3b3; padding: 10px 13px; border-radius: 11px; margin-bottom: 13px; font-size: 13px; }
 
         .hero { background: linear-gradient(160deg, #16223a, #111826); border: 1px solid #26344d; border-radius: 18px; padding: 16px 16px 6px; margin-bottom: 13px; box-shadow: 0 8px 30px rgba(0,0,0,.35); }
