@@ -16,6 +16,14 @@ export const metadata = {
     type: "website",
     locale: "pt_BR",
   },
+  icons: {
+    apple: "/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    title: "Painel CDO",
+    capable: true,
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export const viewport = {
