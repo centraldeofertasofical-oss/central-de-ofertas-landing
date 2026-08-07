@@ -47,7 +47,7 @@ export async function GET(request) {
       const cn = (a.campaign && a.campaign.name) || "?";
       const o = { nome: a.name, status: a.effective_status, spend: Number(i.spend || 0), impr: Number(i.impressions || 0), reach: Number(i.reach || 0), clicks: Number(i.inline_link_clicks || 0), lpv: val(i.actions, "landing_page_view"), lead: lead(i.actions), conversas: conversas(i.actions), campNome: cn };
       ads.push(o);
-      const tipo = /messenger/i.test(cn) ? "Messenger" : /abre-pagina|landing/i.test(cn) ? "Landing" : "Outra";
+      const tipo = /messenger/i.test(cn) ? "Messenger" : /conversa|entrar|grupo|whats/i.test(cn) ? "Grupo WhatsApp" : /abre-pagina|landing/i.test(cn) ? "Landing" : "Outra";
       if (!campMap[cn]) campMap[cn] = { nome: cn, tipo, spend: 0, impr: 0, clicks: 0, conv: 0, lead: 0, ativos: 0, total: 0 };
       const c = campMap[cn];
       c.spend += o.spend; c.impr += o.impr; c.clicks += o.clicks; c.conv += o.conversas; c.lead += o.lead; c.total++;

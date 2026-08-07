@@ -130,7 +130,7 @@ export default function Panel() {
           <div className="battle">
             {campanhas.map((c, i) => (
               <div className={"camp " + (c.nome === vencedora && comCusto.length > 1 ? "win" : "")} key={i}>
-                <div className="ctipo">{c.tipo === "Messenger" ? "💬 Messenger" : c.tipo === "Landing" ? "🌐 Landing" : "📢 " + c.tipo}{c.nome === vencedora && comCusto.length > 1 ? <span className="crown">🏆</span> : null}</div>
+                <div className="ctipo">{c.tipo === "Messenger" ? "💬 Messenger" : c.tipo === "Landing" ? "🌐 Landing" : c.tipo === "Grupo WhatsApp" ? "📲 Grupo WhatsApp" : "📢 " + c.tipo}{c.nome === vencedora && comCusto.length > 1 ? <span className="crown">🏆</span> : null}</div>
                 <div className="cbig">{c.resultados}</div>
                 <div className="csmall">resultados</div>
                 <div className="crow"><span>Orçam./dia</span><b>{c.orcamentoDia ? money(c.orcamentoDia) : "—"}</b></div>
