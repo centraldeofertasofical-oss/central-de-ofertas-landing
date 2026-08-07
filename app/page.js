@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { sendEvent } from "../lib/tracking";
 import { DEALS } from "./deals";
 
@@ -22,13 +22,8 @@ const FEATS = [
 
 export default function Page() {
   const spot = useRef(null);
-  const [inApp, setInApp] = useState(false);
-
   useEffect(() => {
     sendEvent("page_view");
-    // navegador interno do Facebook/Instagram engole o link do WhatsApp -> avisa pra abrir fora
-    const ua = navigator.userAgent || "";
-    if (/FBAN|FBAV|FB_IAB|FBIOS|Instagram|Line\/|MicroMessenger/i.test(ua)) setInApp(true);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) { document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in")); return; }
     const io = new IntersectionObserver(
@@ -84,19 +79,13 @@ export default function Page() {
   );
 
   return (
-    <main className={`page${inApp ? " hasWarn" : ""}`}>
+    <main className="page">
       {/* fundo aurora animado + brilho do cursor */}
       <div className="aurora">
         <span className="blob b1" /><span className="blob b2" /><span className="blob b3" /><span className="blob b4" />
         <span className="grid" />
       </div>
       <div ref={spot} className="spot" />
-
-      {inApp && (
-        <div className="iabWarn">
-          ⚠️ <b>Pra entrar no grupo, abra no navegador:</b> toque em <b>⋮</b> (Android) ou <b>⋯ / Compartilhar</b> (iPhone) no canto da tela e escolha <b>“Abrir no Chrome/Safari”</b>. Depois é só tocar em <b>Entrar</b>.
-        </div>
-      )}
 
       <div className="floatBar"><CTA label="Entrar no grupo grátis" className="floatCta" /></div>
 
