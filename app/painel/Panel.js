@@ -36,13 +36,13 @@ export default function Panel() {
     return () => { window.removeEventListener("touchstart", onStart); window.removeEventListener("touchmove", onMove); window.removeEventListener("touchend", onEnd); };
   }, [load]);
 
-  const tot = d?.tot || { sp: 0, im: 0, rc: 0, cl: 0, lpv: 0, lead: 0, conv: 0 };
+  const tot = d?.tot || { sp: 0, im: 0, rc: 0, cl: 0, lpv: 0, lead: 0 };
   const robo = d?.robo || {};
   const membros = robo.membros != null ? robo.membros : null;
   const historia = d?.historia || [];
   const campanhas = d?.campanhas || [];
-  const cpc = tot.conv > 0 ? tot.sp / tot.conv : null;
-  const resultados = tot.conv + tot.lead;
+  const cpc = tot.lead > 0 ? tot.sp / tot.lead : null;
+  const resultados = tot.lead;
   const pl = { hoje: "hoje", ontem: "ontem", "3d": "últ. 3 dias", "7d": "últ. 7 dias" }[d?.periodo || periodo] || "período";
   const comCusto = campanhas.filter((c) => c.custoResultado != null);
   const vencedora = comCusto.length ? comCusto.reduce((a, b) => (b.custoResultado < a.custoResultado ? b : a)).nome : null;
@@ -73,7 +73,7 @@ export default function Panel() {
   const funil = [
     { ic: "👁️", nm: "Impressões", v: tot.im, cls: "blu" },
     { ic: "👆", nm: "Cliques no anúncio", v: tot.cl, cls: "cya" },
-    { ic: "💬", nm: "Conversas + cliques p/ grupo", v: resultados, cls: "grn" },
+    { ic: "👆", nm: "Cliques pra entrar no grupo", v: resultados, cls: "grn" },
   ];
   const fmax = Math.max(1, tot.im);
 
@@ -106,7 +106,7 @@ export default function Panel() {
           <div className="heroR">
             <div className="hl">resultados · {pl}</div>
             <div className="hv2">{resultados}</div>
-            <div className="hs">conversas + cliques</div>
+            <div className="hs">cliques pra entrar</div>
           </div>
         </div>
         {chart()}
@@ -146,9 +146,8 @@ export default function Panel() {
       {/* KPIs */}
       <div className="kpis">
         <div className="kpi"><div className="l">Gasto {pl}</div><div className="v">{money(tot.sp)}</div><div className="s">orçam. {money(d?.conta?.orcamentoDia || 0)}/dia</div></div>
-        <div className="kpi hot"><div className="l">Conversas</div><div className="v">{tot.conv}</div><div className="s">abriram o chat</div></div>
-        <div className="kpi"><div className="l">Cliques p/ grupo</div><div className="v">{tot.lead}</div><div className="s">na landing</div></div>
-        <div className="kpi"><div className="l">Custo / conversa</div><div className="v">{cpc != null ? money(cpc) : "—"}</div><div className="s">{cpc != null ? (cpc <= 1 ? "ótimo 🔥" : cpc <= 3 ? "ok" : "caro ⚠️") : "aguardando"}</div></div>
+        <div className="kpi hot"><div className="l">Cliques pra entrar</div><div className="v">{tot.lead}</div><div className="s">na landing</div></div>
+        <div className="kpi"><div className="l">Custo por clique</div><div className="v">{cpc != null ? money(cpc) : "—"}</div><div className="s">{cpc != null ? (cpc <= 1 ? "ótimo 🔥" : cpc <= 3 ? "ok" : "caro ⚠️") : "aguardando"}</div></div>
         <div className="kpi"><div className="l">Cliques anúncio</div><div className="v">{num(tot.cl)}</div><div className="s">{num(tot.im)} impressões</div></div>
         <div className="kpi"><div className="l">Alcance</div><div className="v">{num(tot.rc)}</div><div className="s">pessoas diferentes</div></div>
       </div>
