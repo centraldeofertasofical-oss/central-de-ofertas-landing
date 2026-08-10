@@ -45,7 +45,12 @@ fbq('init','1516567043190692');fbq('track','PageView');fbq('track','Lead');
   .cta:active { transform: scale(.98); }
   .fallback { margin: 12px 0 0; color: #9aa2b2; font-size: 13px; }
   .trust { margin: 16px 0 0; color: #8891a2; font-size: 12.5px; }
-  @media (prefers-reduced-motion: reduce) { .spin, .fill { animation: none !important; } .fill { width: 100%; } }
+  /* modo manual (iPhone bloqueou o auto): some o spinner/barra e pulsa o botão */
+  .manual .spin, .manual .bar { display: none; }
+  .manual .loadTxt { color: #ffce33; font-weight: 700; }
+  .manual .cta { animation: pulse 1.3s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); box-shadow: 0 12px 34px rgba(37,211,102,.4); } 50% { transform: scale(1.045); box-shadow: 0 0 42px 9px rgba(37,211,102,.55); } }
+  @media (prefers-reduced-motion: reduce) { .spin, .fill, .manual .cta { animation: none !important; } .fill { width: 100%; } }
 </style>
 </head>
 <body>
@@ -75,16 +80,26 @@ fbq('init','1516567043190692');fbq('track','PageView');fbq('track','Lead');
   (function () {
     var URL_GRUPO = 'https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD';
     var ua = navigator.userAgent || '';
+    var isAndroid = /Android/i.test(ua);
     function vai() {
       // Android dentro do FB/IG: força abrir o app WhatsApp direto
-      if (/FBAN|FBAV|FB_IAB|FBIOS|Instagram/i.test(ua) && /Android/i.test(ua)) {
+      if (/FBAN|FBAV|FB_IAB|FBIOS|Instagram/i.test(ua) && isAndroid) {
         window.location.href = 'intent://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD#Intent;scheme=https;package=com.whatsapp;end';
         setTimeout(function () { window.location.replace(URL_GRUPO); }, 1200);
       } else {
         window.location.replace(URL_GRUPO);
       }
     }
-    setTimeout(vai, 2000);
+    // tenta o redirect automático (funciona no Android e no Safari)
+    setTimeout(vai, 1500);
+    // se ainda estamos na página depois de ~2.7s, o navegador bloqueou o auto (iPhone) → destaca o botão
+    setTimeout(function () {
+      if (!document.hidden) {
+        document.body.classList.add('manual');
+        var t = document.querySelector('.loadTxt');
+        if (t) t.textContent = 'Quase lá! Toque no botão para entrar 👇';
+      }
+    }, 2700);
   })();
 </script>
 </body>
