@@ -5,7 +5,7 @@ import { sendEvent } from "../lib/tracking";
 
 const INVITE_CODE = "K7y2RlgUuAc0Xepn0qHYBD";
 const WHATSAPP_GROUP_URL = `https://chat.whatsapp.com/${INVITE_CODE}`;
-const DELAY_MS = 4000; // tempo até o redirecionamento automático
+const DELAY_MS = 2000; // tempo até o redirecionamento automático (rápido, mas dá tempo do pixel registrar)
 
 export default function Page() {
   const [indo, setIndo] = useState(false);
