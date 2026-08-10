@@ -38,7 +38,17 @@ export default function Page() {
 
   function join(e) {
     sendEvent("group_click");
-    if (typeof window !== "undefined" && window.fbq) window.fbq("track", "Lead");
+    // Lead do pixel: dispara UMA vez por sessão. Antes cada um dos 5 botões disparava,
+    // inflando o número (dava "mais cliques-entrar do que gente que abriu a página") e
+    // fazendo o Facebook otimizar pra quem toca barato, não pra quem entra de verdade.
+    try {
+      if (typeof window !== "undefined" && window.fbq && !sessionStorage.getItem("co_lead")) {
+        sessionStorage.setItem("co_lead", "1");
+        window.fbq("track", "Lead");
+      }
+    } catch (_) {
+      if (typeof window !== "undefined" && window.fbq) window.fbq("track", "Lead");
+    }
     // no navegador interno do FB/IG no Android, força abrir o app WhatsApp direto
     // (pula a tela "Abrir app" que trava na webview)
     const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
