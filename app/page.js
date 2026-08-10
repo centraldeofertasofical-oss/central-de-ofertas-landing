@@ -9,6 +9,7 @@ const DELAY_MS = 4000; // tempo até o redirecionamento automático
 
 export default function Page() {
   const [indo, setIndo] = useState(false);
+  const [teste, setTeste] = useState(false);
   const foi = useRef(false);
 
   // dispara o redirecionamento pro grupo (uma vez só)
@@ -29,6 +30,8 @@ export default function Page() {
 
   useEffect(() => {
     sendEvent("page_view");
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("preview") || params.has("teste")) { setTeste(true); return; } // modo de teste: não redireciona
     const t = setTimeout(irProGrupo, DELAY_MS);
     return () => clearTimeout(t);
   }, []);
@@ -55,7 +58,7 @@ export default function Page() {
 
         <div className="loadWrap" role="status" aria-live="polite">
           <span className="spin" />
-          <span className="loadTxt">{indo ? "Abrindo o WhatsApp…" : "Redirecionando você…"}</span>
+          <span className="loadTxt">{teste ? "Modo de teste — não vai redirecionar" : indo ? "Abrindo o WhatsApp…" : "Redirecionando você…"}</span>
         </div>
         <div className="bar"><span className="fill" /></div>
 
