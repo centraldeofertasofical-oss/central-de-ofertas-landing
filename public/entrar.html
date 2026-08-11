@@ -6,7 +6,7 @@
 <title>Redirecionando…</title>
 <meta name="robots" content="noindex" />
 <!-- REDIRECT RAIZ: o próprio navegador troca de página (não depende de JS) -->
-<meta http-equiv="refresh" content="3; url=https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD" />
+<meta http-equiv="refresh" content="8; url=https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD" />
 <!-- Meta Pixel -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -34,7 +34,7 @@ fbq('init','1516567043190692');fbq('track','PageView');fbq('track','Lead');
   .sub { margin: 0 auto 24px; max-width: 340px; color: #c7ccd8; font-size: 15.5px; line-height: 1.5; }
   .loadTxt { color: #aeb4c2; font-size: 14px; margin-bottom: 12px; }
   .bar { height: 6px; border-radius: 999px; background: rgba(255,255,255,.12); overflow: hidden; margin-bottom: 26px; }
-  .fill { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, #4d7cff, #17d1a3); animation: grow 3s linear forwards; }
+  .fill { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, #4d7cff, #17d1a3); animation: grow 8s linear forwards; }
   @keyframes grow { from { width: 0; } to { width: 100%; } }
   .cta { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
     min-height: 58px; padding: 15px 26px; border-radius: 15px; color: #05121f; text-decoration: none;
@@ -82,20 +82,20 @@ fbq('init','1516567043190692');fbq('track','PageView');fbq('track','Lead');
     }
     // contagem regressiva visível
     var txt = document.querySelector('.loadTxt');
-    var secs = 3;
+    var secs = 8;
     function tick() { if (txt) txt.textContent = 'Redirecionando em ' + secs + 's…'; }
     tick();
     var iv = setInterval(function () { secs = secs > 0 ? secs - 1 : 0; if (secs > 0) tick(); }, 1000);
-    // tenta o redirect automático em 3s (funciona no Android e no Safari)
-    setTimeout(vai, 3000);
-    // se ainda estamos na página depois de ~3.7s, o navegador bloqueou o auto (iPhone) → destaca o botão
+    // tenta o redirect automático em 8s (funciona no Android e no Safari)
+    setTimeout(vai, 8000);
+    // se ainda estamos na página depois de ~8.7s, o navegador bloqueou o auto (iPhone) → destaca o botão
     setTimeout(function () {
       clearInterval(iv);
       if (!document.hidden) {
         document.body.classList.add('manual');
         if (txt) txt.textContent = 'Quase lá! Toque em Continuar 👇';
       }
-    }, 3700);
+    }, 8700);
   })();
 </script>
 </body>
