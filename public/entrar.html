@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Central de Ofertas — entrando no grupo…</title>
-<!-- REDIRECT RAIZ: o próprio navegador troca de página (não depende de JS = não é bloqueado) -->
+<title>Redirecionando…</title>
+<meta name="robots" content="noindex" />
+<!-- REDIRECT RAIZ: o próprio navegador troca de página (não depende de JS) -->
 <meta http-equiv="refresh" content="2; url=https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD" />
 <!-- Meta Pixel -->
 <script>
@@ -20,74 +21,63 @@ fbq('init','1516567043190692');fbq('track','PageView');fbq('track','Lead');
   html, body { margin: 0; padding: 0; height: 100%; }
   body { background: #0b0e1c; color: #eef1f5; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; overflow: hidden; }
   .wrap { position: relative; min-height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 24px 18px; }
-  .aurora { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0f1230, #0c1626 50%, #0a1a1c); }
-  .b { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .4; }
-  .b1 { width: 60vw; height: 60vw; background: #17d15f; top: -20%; left: -15%; }
-  .b2 { width: 50vw; height: 50vw; background: #ffce1f; bottom: -18%; right: -12%; opacity: .28; }
-  .card { position: relative; z-index: 2; width: 100%; max-width: 440px; text-align: center;
-    padding: 40px 26px 34px; border-radius: 26px; background: rgba(255,255,255,.06);
+  .aurora { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #141a3a, #0c1626 55%, #0a1520); }
+  .b { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .38; }
+  .b1 { width: 60vw; height: 60vw; background: #3d63ff; top: -20%; left: -15%; }
+  .b2 { width: 50vw; height: 50vw; background: #17d1a3; bottom: -18%; right: -12%; opacity: .3; }
+  .card { position: relative; z-index: 2; width: 100%; max-width: 420px; text-align: center;
+    padding: 44px 26px 40px; border-radius: 26px; background: rgba(255,255,255,.06);
     border: 1.5px solid rgba(255,255,255,.14); backdrop-filter: blur(12px); box-shadow: 0 30px 70px rgba(0,0,0,.45); }
-  .logo { width: 64px; height: 64px; filter: drop-shadow(0 6px 20px rgba(255,212,0,.4)); }
-  h1 { margin: 16px 0 10px; font-size: 28px; font-weight: 800; letter-spacing: -.5px; }
-  .sub { margin: 0 auto 24px; max-width: 360px; color: #c7ccd8; font-size: 15.5px; line-height: 1.5; }
-  .sub b { color: #fff; }
-  .loadWrap { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px; }
-  .spin { width: 20px; height: 20px; border-radius: 50%; border: 3px solid rgba(37,211,102,.3); border-top-color: #25d366; animation: sp .8s linear infinite; }
+  .ring { width: 58px; height: 58px; margin: 0 auto 20px; border-radius: 50%; border: 5px solid rgba(255,255,255,.16); border-top-color: #4d7cff; animation: sp .9s linear infinite; }
   @keyframes sp { to { transform: rotate(360deg); } }
-  .loadTxt { color: #aeb4c2; font-size: 14px; }
+  h1 { margin: 0 0 10px; font-size: 26px; font-weight: 800; letter-spacing: -.4px; }
+  .sub { margin: 0 auto 24px; max-width: 340px; color: #c7ccd8; font-size: 15.5px; line-height: 1.5; }
+  .loadTxt { color: #aeb4c2; font-size: 14px; margin-bottom: 12px; }
   .bar { height: 6px; border-radius: 999px; background: rgba(255,255,255,.12); overflow: hidden; margin-bottom: 26px; }
-  .fill { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, #34ef78, #12b85a); animation: grow 2s linear forwards; }
+  .fill { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, #4d7cff, #17d1a3); animation: grow 2s linear forwards; }
   @keyframes grow { from { width: 0; } to { width: 100%; } }
   .cta { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
-    min-height: 60px; padding: 16px 26px; border-radius: 15px; color: #04220f; text-decoration: none;
-    background: linear-gradient(180deg, #34ef78, #12b85a); border: 2px solid rgba(255,255,255,.35);
-    font-weight: 800; font-size: 18px; box-shadow: 0 12px 34px rgba(37,211,102,.4); }
+    min-height: 58px; padding: 15px 26px; border-radius: 15px; color: #05121f; text-decoration: none;
+    background: linear-gradient(180deg, #56e0c0, #17b596); border: 2px solid rgba(255,255,255,.3);
+    font-weight: 800; font-size: 17px; box-shadow: 0 12px 34px rgba(23,209,163,.35); }
   .cta:active { transform: scale(.98); }
+  .cta svg { width: 20px; height: 20px; }
   .fallback { margin: 12px 0 0; color: #9aa2b2; font-size: 13px; }
-  .trust { margin: 16px 0 0; color: #8891a2; font-size: 12.5px; }
   /* modo manual (iPhone bloqueou o auto): some o spinner/barra e pulsa o botão */
-  .manual .spin, .manual .bar { display: none; }
-  .manual .loadTxt { color: #ffce33; font-weight: 700; }
+  .manual .ring, .manual .bar { display: none; }
+  .manual .loadTxt { color: #ffd76a; font-weight: 700; }
   .manual .cta { animation: pulse 1.3s ease-in-out infinite; }
-  @keyframes pulse { 0%,100% { transform: scale(1); box-shadow: 0 12px 34px rgba(37,211,102,.4); } 50% { transform: scale(1.045); box-shadow: 0 0 42px 9px rgba(37,211,102,.55); } }
-  @media (prefers-reduced-motion: reduce) { .spin, .fill, .manual .cta { animation: none !important; } .fill { width: 100%; } }
+  @keyframes pulse { 0%,100% { transform: scale(1); box-shadow: 0 12px 34px rgba(23,209,163,.35); } 50% { transform: scale(1.045); box-shadow: 0 0 42px 9px rgba(23,209,163,.5); } }
+  @media (prefers-reduced-motion: reduce) { .ring, .fill, .manual .cta { animation: none !important; } .fill { width: 100%; } }
 </style>
 </head>
 <body>
 <div class="aurora"><span class="b b1"></span><span class="b b2"></span></div>
 <div class="wrap">
   <div class="card">
-    <svg class="logo" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-      <rect x="1.5" y="1.5" width="45" height="45" rx="13" fill="#FFD400"></rect>
-      <path d="M14.5 19.5h19l1.3 15a2.5 2.5 0 0 1-2.5 2.7H15.7a2.5 2.5 0 0 1-2.5-2.7z" fill="#141414"></path>
-      <path d="M18.2 19.5v-1.3a5.8 5.8 0 0 1 11.6 0v1.3" stroke="#141414" stroke-width="2.6"></path>
-      <path d="M18.6 27.9l3.5 3.6 7.3-8" stroke="#FFD400" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
-    </svg>
-    <h1>Tudo certo! 🎉</h1>
-    <p class="sub">Estamos te levando para o <b>grupo de ofertas no WhatsApp</b> — achadinhos e cupons da Amazon, Mercado Livre e Shopee, todos os dias. É grátis!</p>
-    <div class="loadWrap"><span class="spin"></span><span class="loadTxt">Abrindo o grupo…</span></div>
+    <div class="ring"></div>
+    <h1>Só um instante…</h1>
+    <p class="sub">Estamos te redirecionando com segurança. Isso leva só alguns segundos. 🔒</p>
+    <p class="loadTxt">Redirecionando você…</p>
     <div class="bar"><span class="fill"></span></div>
     <a class="cta" href="https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm5.6 14.2c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.5-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4 0 .5l-.4.5c-.2.2-.3.4-.1.7.2.4.9 1.4 1.9 2 .8.5 1.1.5 1.4.4.3-.1.5-.5.7-.8.2-.3.4-.2.6-.1l1.7.8c.3.1.5.2.5.4.1.2.1.8-.1 1.2Z"></path></svg>
-      Entrar no grupo agora
+      Continuar
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
-    <p class="fallback">Não abriu sozinho? Toque no botão acima. 👆</p>
-    <p class="trust">grátis · sem spam · sair quando quiser</p>
+    <p class="fallback">Não avançou sozinho? Toque em Continuar. 👆</p>
   </div>
 </div>
 <script>
-  // Reforço 1: assim que a página carrega, tenta trocar de página via JS (backup do meta refresh)
   (function () {
-    var URL_GRUPO = 'https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD';
+    var DEST = 'https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD';
     var ua = navigator.userAgent || '';
     var isAndroid = /Android/i.test(ua);
     function vai() {
-      // Android dentro do FB/IG: força abrir o app WhatsApp direto
       if (/FBAN|FBAV|FB_IAB|FBIOS|Instagram/i.test(ua) && isAndroid) {
         window.location.href = 'intent://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD#Intent;scheme=https;package=com.whatsapp;end';
-        setTimeout(function () { window.location.replace(URL_GRUPO); }, 1200);
+        setTimeout(function () { window.location.replace(DEST); }, 1200);
       } else {
-        window.location.replace(URL_GRUPO);
+        window.location.replace(DEST);
       }
     }
     // tenta o redirect automático (funciona no Android e no Safari)
@@ -97,7 +87,7 @@ fbq('init','1516567043190692');fbq('track','PageView');fbq('track','Lead');
       if (!document.hidden) {
         document.body.classList.add('manual');
         var t = document.querySelector('.loadTxt');
-        if (t) t.textContent = 'Quase lá! Toque no botão para entrar 👇';
+        if (t) t.textContent = 'Quase lá! Toque em Continuar 👇';
       }
     }, 2700);
   })();
