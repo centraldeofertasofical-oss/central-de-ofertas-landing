@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Redirecionando…</title>
+<title>Central de Ofertas — entrando no grupo…</title>
 <meta name="robots" content="noindex" />
-<!-- REDIRECT RAIZ: o próprio navegador troca de página (não depende de JS) -->
+<!-- REDIRECT: o navegador troca de página sozinho -->
 <meta http-equiv="refresh" content="2; url=https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD" />
 <!-- Meta Pixel -->
 <script>
@@ -19,54 +19,93 @@ fbq('init','1516567043190692');fbq('track','PageView');fbq('track','Lead');
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; height: 100%; }
-  body { background: #0b0e1c; color: #eef1f5; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; overflow: hidden; }
-  .wrap { position: relative; min-height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 24px 18px; }
-  .aurora { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #141a3a, #0c1626 55%, #0a1520); }
-  .b { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .38; }
-  .b1 { width: 60vw; height: 60vw; background: #3d63ff; top: -20%; left: -15%; }
-  .b2 { width: 50vw; height: 50vw; background: #17d1a3; bottom: -18%; right: -12%; opacity: .3; }
-  .card { position: relative; z-index: 2; width: 100%; max-width: 420px; text-align: center;
-    padding: 44px 26px 40px; border-radius: 26px; background: rgba(255,255,255,.06);
-    border: 1.5px solid rgba(255,255,255,.14); backdrop-filter: blur(12px); box-shadow: 0 30px 70px rgba(0,0,0,.45); }
-  .ring { width: 58px; height: 58px; margin: 0 auto 20px; border-radius: 50%; border: 5px solid rgba(255,255,255,.16); border-top-color: #4d7cff; animation: sp .9s linear infinite; }
-  @keyframes sp { to { transform: rotate(360deg); } }
-  h1 { margin: 0 0 10px; font-size: 26px; font-weight: 800; letter-spacing: -.4px; }
-  .sub { margin: 0 auto 24px; max-width: 340px; color: #c7ccd8; font-size: 15.5px; line-height: 1.5; }
-  .loadTxt { color: #aeb4c2; font-size: 14px; margin-bottom: 12px; }
-  .bar { height: 6px; border-radius: 999px; background: rgba(255,255,255,.12); overflow: hidden; margin-bottom: 26px; }
-  .fill { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, #4d7cff, #17d1a3); animation: grow 2s linear forwards; }
+  body { background: #0a1512; color: #eef4f0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; overflow: hidden; }
+  .wrap { position: relative; min-height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 22px 18px; }
+  .aurora { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: radial-gradient(120% 80% at 50% -10%, #123a2a 0%, #0a1512 60%); }
+  .b { position: absolute; border-radius: 50%; filter: blur(80px); }
+  .b1 { width: 55vw; height: 55vw; background: #17d15f; opacity: .32; top: -18%; left: -12%; animation: f 18s ease-in-out infinite; }
+  .b2 { width: 48vw; height: 48vw; background: #ffce1f; opacity: .16; bottom: -16%; right: -10%; animation: f 23s ease-in-out infinite reverse; }
+  @keyframes f { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6vw,5vh) scale(1.12); } }
+
+  .card { position: relative; z-index: 2; width: 100%; max-width: 430px; text-align: center;
+    padding: 34px 26px 30px; border-radius: 26px; background: rgba(255,255,255,.055);
+    border: 1.5px solid rgba(255,255,255,.12); backdrop-filter: blur(12px); box-shadow: 0 30px 70px rgba(0,0,0,.5); }
+
+  .brand { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .brand svg { width: 46px; height: 46px; filter: drop-shadow(0 5px 16px rgba(255,212,0,.4)); }
+  .brand .nome { display: flex; flex-direction: column; text-align: left; line-height: 1; }
+  .brand .nome b { font-size: 17px; letter-spacing: .5px; color: #FFD400; font-weight: 800; }
+  .brand .nome span { font-size: 9px; letter-spacing: 2.5px; color: #cdd8d2; margin-top: 3px; }
+
+  .selo { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; border-radius: 999px;
+    background: rgba(37,211,102,.12); border: 1px solid rgba(37,211,102,.35); color: #7bf0a8; font-size: 12px; font-weight: 700; margin-bottom: 14px; }
+  .selo .wa { width: 15px; height: 15px; }
+
+  h1 { margin: 0 0 10px; font-size: 27px; font-weight: 800; letter-spacing: -.4px; }
+  .sub { margin: 0 auto 22px; max-width: 360px; color: #c4d0ca; font-size: 15.5px; line-height: 1.5; }
+  .sub b { color: #fff; font-weight: 600; }
+
+  .loadTxt { color: #9fb3aa; font-size: 13.5px; margin-bottom: 10px; }
+  .bar { height: 6px; border-radius: 999px; background: rgba(255,255,255,.1); overflow: hidden; margin-bottom: 22px; }
+  .fill { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, #34ef78, #12b85a); animation: grow 2s linear forwards; }
   @keyframes grow { from { width: 0; } to { width: 100%; } }
+
   .cta { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
-    min-height: 58px; padding: 15px 26px; border-radius: 15px; color: #05121f; text-decoration: none;
-    background: linear-gradient(180deg, #56e0c0, #17b596); border: 2px solid rgba(255,255,255,.3);
-    font-weight: 800; font-size: 17px; box-shadow: 0 12px 34px rgba(23,209,163,.35); }
+    min-height: 60px; padding: 16px 26px; border-radius: 15px; color: #04220f; text-decoration: none;
+    background: linear-gradient(180deg, #34ef78, #12b85a); border: 2px solid rgba(255,255,255,.35);
+    font-weight: 800; font-size: 18px; box-shadow: 0 12px 34px rgba(37,211,102,.4); }
   .cta:active { transform: scale(.98); }
-  .cta svg { width: 20px; height: 20px; }
-  .fallback { margin: 12px 0 0; color: #9aa2b2; font-size: 13px; }
-  /* modo manual (iPhone bloqueou o auto): some o spinner/barra e pulsa o botão */
-  .manual .ring, .manual .bar { display: none; }
+  .cta svg { width: 22px; height: 22px; }
+  .fallback { margin: 12px 0 0; color: #93a49b; font-size: 12.5px; }
+  .trust { margin: 14px 0 0; color: #839a8e; font-size: 12px; }
+
+  .foot { position: relative; z-index: 2; margin-top: 18px; display: flex; gap: 8px; font-size: 12px; color: #5c6f66; }
+  .foot a { color: #25d366; text-decoration: none; }
+  .foot span { opacity: .5; }
+
+  .manual .bar { display: none; }
   .manual .loadTxt { color: #ffd76a; font-weight: 700; }
   .manual .cta { animation: pulse 1.3s ease-in-out infinite; }
-  @keyframes pulse { 0%,100% { transform: scale(1); box-shadow: 0 12px 34px rgba(23,209,163,.35); } 50% { transform: scale(1.045); box-shadow: 0 0 42px 9px rgba(23,209,163,.5); } }
-  @media (prefers-reduced-motion: reduce) { .ring, .fill, .manual .cta { animation: none !important; } .fill { width: 100%; } }
+  @keyframes pulse { 0%,100% { transform: scale(1); box-shadow: 0 12px 34px rgba(37,211,102,.4); } 50% { transform: scale(1.045); box-shadow: 0 0 42px 9px rgba(37,211,102,.5); } }
+  @media (prefers-reduced-motion: reduce) { .b, .fill, .manual .cta { animation: none !important; } .fill { width: 100%; } }
 </style>
 </head>
 <body>
 <div class="aurora"><span class="b b1"></span><span class="b b2"></span></div>
 <div class="wrap">
   <div class="card">
-    <div class="ring"></div>
-    <h1>Só um instante…</h1>
-    <p class="sub">Estamos te redirecionando com segurança. Isso leva só alguns segundos. 🔒</p>
-    <p class="loadTxt">Redirecionando você…</p>
+    <span class="brand">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="45" height="45" rx="13" fill="#FFD400"></rect>
+        <path d="M14.5 19.5h19l1.3 15a2.5 2.5 0 0 1-2.5 2.7H15.7a2.5 2.5 0 0 1-2.5-2.7z" fill="#141414"></path>
+        <path d="M18.2 19.5v-1.3a5.8 5.8 0 0 1 11.6 0v1.3" stroke="#141414" stroke-width="2.6"></path>
+        <path d="M18.6 27.9l3.5 3.6 7.3-8" stroke="#FFD400" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span class="nome"><b>CENTRAL</b><span>DE OFERTAS</span></span>
+    </span>
+
+    <div class="selo">
+      <svg class="wa" viewBox="0 0 24 24" fill="#25d366" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Z"/></svg>
+      Comunidade oficial no WhatsApp
+    </div>
+
+    <h1>Tudo pronto! 🎉</h1>
+    <p class="sub">Estamos te levando para o nosso grupo no WhatsApp — as melhores <b>ofertas e cupons</b> da Amazon, Mercado Livre e Shopee, todo dia no seu celular. É grátis!</p>
+
+    <p class="loadTxt">Abrindo o WhatsApp…</p>
     <div class="bar"><span class="fill"></span></div>
+
     <a class="cta" href="https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD">
-      Continuar
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm5.6 14.2c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.5-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4 0 .5l-.4.5c-.2.2-.3.4-.1.7.2.4.9 1.4 1.9 2 .8.5 1.1.5 1.4.4.3-.1.5-.5.7-.8.2-.3.4-.2.6-.1l1.7.8c.3.1.5.2.5.4.1.2.1.8-.1 1.2Z"></path></svg>
+      Entrar no grupo agora
     </a>
-    <p class="fallback">Não avançou sozinho? Toque em Continuar. 👆</p>
+    <p class="fallback">Não abriu sozinho? Toque no botão acima. 👆</p>
+    <p class="trust">grátis · sem spam · saia quando quiser</p>
   </div>
 </div>
+<footer class="foot" style="position:fixed;left:0;right:0;bottom:14px;justify-content:center;">
+  <a href="/privacidade">Privacidade</a><span>·</span><a href="/exclusao-de-dados">Exclusão de dados</a>
+</footer>
 <script>
   (function () {
     var DEST = 'https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD';
@@ -80,20 +119,13 @@ fbq('init','1516567043190692');fbq('track','PageView');fbq('track','Lead');
         window.location.replace(DEST);
       }
     }
-    // contagem regressiva visível
     var txt = document.querySelector('.loadTxt');
-    var secs = 2;
-    function tick() { if (txt) txt.textContent = 'Redirecionando em ' + secs + 's…'; }
-    tick();
-    var iv = setInterval(function () { secs = secs > 0 ? secs - 1 : 0; if (secs > 0) tick(); }, 1000);
-    // tenta o redirect automático em 2s (funciona no Android e no Safari)
+    if (/[?&](preview|teste)/.test(location.search)) { var mr = document.querySelector('meta[http-equiv="refresh"]'); if (mr) mr.remove(); if (txt) txt.textContent = 'Modo de teste — não vai redirecionar'; return; }
     setTimeout(vai, 2000);
-    // se ainda estamos na página depois de ~2.7s, o navegador bloqueou o auto (iPhone) → destaca o botão
     setTimeout(function () {
-      clearInterval(iv);
       if (!document.hidden) {
         document.body.classList.add('manual');
-        if (txt) txt.textContent = 'Quase lá! Toque em Continuar 👇';
+        if (txt) txt.textContent = 'Quase lá! Toque em "Entrar no grupo" 👇';
       }
     }, 2700);
   })();
