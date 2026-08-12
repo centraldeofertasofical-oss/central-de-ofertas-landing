@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Central de Ofertas — grupo de promoções no WhatsApp</title>
+<meta name="robots" content="noindex" />
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1516567043190692');fbq('track','PageView');
+</script>
+<style>
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  :root{
+    --bg:#070a12;--card:#0e1420;--line:rgba(255,255,255,.09);
+    --neon:#25ff8f;--neon2:#00e0ff;--yellow:#ffd400;--ink:#eaf2ee;--muted:#9fb0ba;
+  }
+  body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .glow{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(60% 40% at 50% -5%,rgba(37,255,143,.14),transparent 60%),radial-gradient(50% 40% at 90% 20%,rgba(0,224,255,.10),transparent 60%)}
+  .wrap{position:relative;z-index:2;max-width:520px;margin:0 auto;padding:0 16px 130px}
+
+  /* topo: marca + prova social */
+  header{text-align:center;padding:22px 0 6px}
+  .brand{display:inline-flex;align-items:center;gap:9px}
+  .brand svg{width:40px;height:40px;filter:drop-shadow(0 4px 14px rgba(255,212,0,.4))}
+  .brand b{font-size:15px;letter-spacing:.5px;color:var(--yellow);font-weight:800}
+  .brand em{font-style:normal;font-size:8.5px;letter-spacing:2.5px;color:var(--muted);display:block;margin-top:2px}
+  .live{display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:6px 13px;border-radius:999px;background:rgba(37,255,143,.1);border:1px solid rgba(37,255,143,.3);font-size:12.5px;color:#8effc4;font-weight:700}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--neon);box-shadow:0 0 10px var(--neon);animation:pulse 1.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  /* marquee de quedas de preço */
+  .marq{margin:14px 0;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:9px 0;background:rgba(255,255,255,.02)}
+  .track{display:inline-flex;white-space:nowrap;gap:26px;animation:roll 26s linear infinite;will-change:transform}
+  @keyframes roll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .mitem{font-size:13px;color:#cfe;display:inline-flex;gap:7px;align-items:center}
+  .mitem s{color:#7c8a92}.mitem b{color:var(--neon)}
+
+  h1{text-align:center;font-size:clamp(26px,7vw,34px);font-weight:900;line-height:1.1;letter-spacing:-.5px;margin:16px 6px 8px}
+  h1 .hl{color:var(--neon);text-shadow:0 0 22px rgba(37,255,143,.5)}
+  .sub{text-align:center;color:var(--muted);font-size:15px;line-height:1.5;max-width:400px;margin:0 auto 8px}
+  .sub b{color:#fff}
+
+  /* grid de produtos reais */
+  .sechead{display:flex;align-items:center;justify-content:space-between;margin:22px 4px 12px}
+  .sechead h2{font-size:16px;margin:0;font-weight:800}
+  .sechead span{font-size:12px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative;animation:pop .5s both}
+  @keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .card .off{position:absolute;top:9px;left:9px;z-index:2;background:linear-gradient(180deg,#ff4d6d,#e11d48);color:#fff;font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:999px;box-shadow:0 4px 14px rgba(225,29,72,.5)}
+  .card .shot{aspect-ratio:1/1;background:#fff;display:flex;align-items:center;justify-content:center;padding:14px}
+  .card .shot img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply}
+  .card .info{padding:9px 11px 12px}
+  .card .nm{font-size:12.5px;line-height:1.3;height:32px;overflow:hidden;color:#dfe}
+  .card .pr{margin-top:6px;display:flex;align-items:baseline;gap:7px}
+  .card .pr s{color:#7c8a92;font-size:12px}
+  .card .pr strong{color:var(--neon);font-size:18px;font-weight:800}
+  .card .hist{margin-top:5px;font-size:10.5px;color:#ffcf5a}
+
+  /* notificação social */
+  #notif{position:fixed;left:12px;bottom:96px;z-index:40;max-width:290px;
+    background:rgba(14,20,32,.96);border:1px solid rgba(37,255,143,.4);border-radius:14px;padding:10px 13px;
+    box-shadow:0 12px 34px rgba(0,0,0,.5),0 0 20px rgba(37,255,143,.15);
+    display:flex;align-items:center;gap:10px;transform:translateX(-120%);opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .5s}
+  #notif.show{transform:none;opacity:1}
+  #notif .av{width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;color:#04220f;font-size:14px}
+  #notif .tx{font-size:12.5px;line-height:1.3}
+  #notif .tx b{color:#fff}#notif .tx span{color:var(--muted);font-size:11px}
+
+  /* botão fixo neon vibrando */
+  .barfix{position:fixed;left:0;right:0;bottom:0;z-index:50;padding:12px 14px calc(14px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,transparent,rgba(7,10,18,.96) 40%)}
+  .cta{display:flex;align-items:center;justify-content:center;gap:10px;max-width:492px;margin:0 auto;
+    min-height:62px;padding:16px 22px;border-radius:16px;text-decoration:none;
+    color:#04220f;font-weight:900;font-size:19px;letter-spacing:.3px;
+    background:linear-gradient(180deg,#3dffa0,#00d97a);
+    border:2px solid #9dffcf;
+    box-shadow:0 0 0 0 rgba(37,255,143,.7),0 0 26px 4px rgba(37,255,143,.55),0 0 60px rgba(0,224,255,.25);
+    animation:vibra 1.05s ease-in-out infinite}
+  @keyframes vibra{
+    0%,100%{transform:scale(1) translateX(0);box-shadow:0 0 24px 3px rgba(37,255,143,.5),0 0 60px rgba(0,224,255,.2)}
+    25%{transform:scale(1.03) translateX(-1.5px)}
+    50%{transform:scale(1.05);box-shadow:0 0 42px 9px rgba(37,255,143,.8),0 0 80px rgba(0,224,255,.4)}
+    75%{transform:scale(1.03) translateX(1.5px)}
+  }
+  .cta svg{width:24px;height:24px}
+  .cta small{display:block;font-size:11px;font-weight:700;opacity:.8;margin-top:1px}
+  .free{text-align:center;color:var(--muted);font-size:11px;margin-top:8px}
+  @media (prefers-reduced-motion:reduce){.cta,.dot,.track{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+  <header>
+    <span class="brand">
+      <svg viewBox="0 0 48 48" fill="none"><rect x="1.5" y="1.5" width="45" height="45" rx="13" fill="#FFD400"/><path d="M14.5 19.5h19l1.3 15a2.5 2.5 0 0 1-2.5 2.7H15.7a2.5 2.5 0 0 1-2.5-2.7z" fill="#141414"/><path d="M18.2 19.5v-1.3a5.8 5.8 0 0 1 11.6 0v1.3" stroke="#141414" stroke-width="2.6"/><path d="M18.6 27.9l3.5 3.6 7.3-8" stroke="#FFD400" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><b>CENTRAL DE OFERTAS</b><em>OFERTAS OFICIAIS E SEGURAS</em></span>
+    </span>
+    <div><span class="live"><span class="dot"></span> +2.000 pessoas economizando agora</span></div>
+  </header>
+
+  <div class="marq"><div class="track" id="track">📉 carregando as maiores quedas de preço…</div></div>
+
+  <h1>As promoções que <span class="hl">somem rápido</span><br>chegam aqui primeiro</h1>
+  <p class="sub">Achadinhos e cupons da <b>Amazon</b>, <b>Mercado Livre</b> e <b>Shopee</b> — selecionados por IA, direto no seu WhatsApp. É <b>grátis</b>.</p>
+
+  <div class="sechead"><h2>🔥 Ofertas de agora</h2><span>atualiza sozinho</span></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div id="notif"><span class="av"></span><div class="tx"></div></div>
+
+<div class="barfix">
+  <a class="cta" id="cta" href="https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm5.6 14.2c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.5-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4 0 .5l-.4.5c-.2.2-.3.4-.1.7.2.4.9 1.4 1.9 2 .8.5 1.1.5 1.4.4.3-.1.5-.5.7-.8.2-.3.4-.2.6-.1l1.7.8c.3.1.5.2.5.4.1.2.1.8-.1 1.2Z"/></svg>
+    <span>QUERO ENTRAR NO GRUPO<small>grátis · sem spam · sai quando quiser</small></span>
+  </a>
+  <p class="free">🔒 grupo oficial · você só recebe as ofertas</p>
+</div>
+
+<script>
+  var SB='https://zqkcsucactezbampkbps.supabase.co',KEY='sb_publishable_WVQdo69bguY3Bb55NP4sJA_le7IVszi';
+  var GRUPO='https://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD';
+  var CODE='K7y2RlgUuAc0Xepn0qHYBD';
+
+  // ---- entrar no grupo (abre o app direto, fallback web) ----
+  function entrar(){
+    if(window.fbq)fbq('track','Lead');
+    var ua=navigator.userAgent||'';
+    if(/Android/i.test(ua)){window.location.href='intent://chat.whatsapp.com/'+CODE+'#Intent;scheme=https;package=com.whatsapp;end';setTimeout(function(){if(!document.hidden)window.location.replace(GRUPO)},1500);}
+    else{window.location.href='whatsapp://chat?code='+CODE;setTimeout(function(){if(!document.hidden)window.location.replace(GRUPO)},1500);}
+  }
+  document.getElementById('cta').addEventListener('click',function(e){e.preventDefault();entrar();});
+
+  // ---- produtos reais do Supabase ----
+  var esc=function(s){return String(s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+  function money(n){n=Number(n);return isFinite(n)?n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}):''}
+  (async function(){
+    try{
+      var lojas=['amazon','shopee','mercado_livre'],H={apikey:KEY,Authorization:'Bearer '+KEY};
+      var partes=await Promise.all(lojas.map(function(l){return fetch(SB+'/rest/v1/produtos?select=produto,link_imagem,preco_de,preco_por,desconto&ativo=eq.true&plataforma=eq.'+l+'&order=data_publicacao.desc,id.desc&limit=8',{headers:H}).then(function(r){return r.ok?r.json():[]}).catch(function(){return[]})}));
+      var listas=partes.map(function(a){return a.filter(function(p){return p.link_imagem&&p.preco_por})});
+      var prods=[];var m=Math.max.apply(null,listas.map(function(a){return a.length}).concat([0]));
+      for(var i=0;i<m;i++)for(var j=0;j<listas.length;j++)if(listas[j][i])prods.push(listas[j][i]);
+      if(!prods.length)return;
+      // grid
+      document.getElementById('grid').innerHTML=prods.slice(0,12).map(function(p){
+        var off=p.desconto?('<div class="off">-'+Math.round(p.desconto)+'%</div>'):'';
+        var de=p.preco_de&&Number(p.preco_de)>Number(p.preco_por)?'<s>R$ '+money(p.preco_de)+'</s>':'';
+        var hist=p.preco_de&&Number(p.preco_de)>Number(p.preco_por)?'<div class="hist">📉 menor preço em semanas</div>':'';
+        return '<div class="card">'+off+'<div class="shot"><img loading="lazy" src="'+esc(p.link_imagem)+'" alt=""></div><div class="info"><div class="nm">'+esc(p.produto)+'</div><div class="pr">'+de+'<strong>R$ '+money(p.preco_por)+'</strong></div>'+hist+'</div></div>';
+      }).join('');
+      // marquee de quedas
+      var quedas=prods.filter(function(p){return p.preco_de&&Number(p.preco_de)>Number(p.preco_por)}).slice(0,12);
+      if(quedas.length){
+        var one=quedas.map(function(p){return '<span class="mitem">📉 '+esc(String(p.produto).slice(0,26))+' <s>R$'+money(p.preco_de)+'</s> <b>R$'+money(p.preco_por)+'</b></span>'}).join('');
+        document.getElementById('track').innerHTML=one+one;
+      }
+    }catch(e){}
+  })();
+
+  // ---- balões "fulano acabou de entrar" ----
+  var NOMES=['Rodrigo','Ana','Carlos','Juliana','Marcos','Fernanda','Bruno','Camila','Lucas','Patrícia','Rafael','Aline','Thiago','Bianca','Diego','Larissa','Gabriel','Vanessa','Felipe','Mariana','Paulo','Beatriz','André','Jéssica','Renata','Vinícius','Sabrina','Eduardo','Tatiane','Leandro'];
+  var CIDADES=['São Paulo','Rio de Janeiro','Belo Horizonte','Salvador','Fortaleza','Recife','Curitiba','Porto Alegre','Goiânia','Brasília','Manaus','Belém','Campinas','Guarulhos','São Luís','Natal','Maceió','Teresina','João Pessoa','Uberlândia'];
+  var CORES=['#25ff8f','#00e0ff','#ffd400','#ff6ad5','#7c9dff','#ffa14d'];
+  var nEl=document.getElementById('notif'),avEl=nEl.querySelector('.av'),txEl=nEl.querySelector('.tx');
+  var seq=0;
+  function pick(a){return a[Math.floor(Math.random()*a.length)]}
+  function balao(){
+    var nome=pick(NOMES),cid=pick(CIDADES),cor=pick(CORES);
+    var min=Math.floor(Math.random()*3);var quando=min===0?'agora mesmo':(min+' min atrás');
+    avEl.textContent=nome[0];avEl.style.background=cor;
+    txEl.innerHTML='<b>'+nome+'</b> de '+cid+' <span>acabou de entrar no grupo 🎉</span><br><span>'+quando+'</span>';
+    nEl.classList.add('show');
+    setTimeout(function(){nEl.classList.remove('show')},4200);
+  }
+  setTimeout(function loop(){balao();setTimeout(loop,Math.random()*3500+4500)},2500);
+</script>
+</body>
+</html>
