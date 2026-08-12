@@ -112,16 +112,21 @@ fbq('init','1516567043190692');fbq('track','PageView');fbq('track','Lead');
     var ua = navigator.userAgent || '';
     var isAndroid = /Android/i.test(ua);
     function vai() {
-      if (/FBAN|FBAV|FB_IAB|FBIOS|Instagram/i.test(ua) && isAndroid) {
+      if (isAndroid) {
+        // Android: intent abre o app WhatsApp direto no grupo
         window.location.href = 'intent://chat.whatsapp.com/K7y2RlgUuAc0Xepn0qHYBD#Intent;scheme=https;package=com.whatsapp;end';
-        setTimeout(function () { window.location.replace(DEST); }, 1200);
+        setTimeout(function () { if (!document.hidden) window.location.replace(DEST); }, 1600);
       } else {
-        window.location.replace(DEST);
+        // iOS/resto: tenta abrir o APP direto no grupo (pula a tela web com o botao "Baixar" que confunde)
+        window.location.href = 'whatsapp://chat?code=K7y2RlgUuAc0Xepn0qHYBD';
+        setTimeout(function () { if (!document.hidden) window.location.replace(DEST); }, 1600);
       }
     }
     var txt = document.querySelector('.loadTxt');
+    var btn = document.querySelector('.cta');
+    if (btn) btn.addEventListener('click', function (e) { e.preventDefault(); vai(); });
     if (/[?&](preview|teste)/.test(location.search)) { var mr = document.querySelector('meta[http-equiv="refresh"]'); if (mr) mr.remove(); if (txt) txt.textContent = 'Modo de teste — não vai redirecionar'; return; }
-    setTimeout(vai, 2000);
+    setTimeout(vai, 900);
     setTimeout(function () {
       if (!document.hidden) {
         document.body.classList.add('manual');
