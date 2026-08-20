@@ -151,6 +151,26 @@ export default function Page() {
         </div>
       </section>
 
+      {/* ---------- VEJA O GRUPO POR DENTRO ---------- */}
+      <section className="peek">
+        <div className="container peekIn">
+          <div className="peekImg reveal">
+            <img src="/mockup.jpg" alt="Tela do grupo no WhatsApp com uma oferta real" loading="lazy" />
+          </div>
+          <div className="peekTxt reveal">
+            <span className="eyebrow dark">Por dentro do grupo</span>
+            <h2>Cada oferta chega prontinha pra você comprar</h2>
+            <p>Foto do produto, preço de antes e de agora, o desconto, o cupom e o link direto — é só tocar e economizar. Sem precisar procurar nada.</p>
+            <ul className="ticks light">
+              <li>Preço cheio × preço com desconto</li>
+              <li>Cupom já indicado</li>
+              <li>Link direto pra loja</li>
+            </ul>
+            <CTA pulse />
+          </div>
+        </div>
+      </section>
+
       {/* ---------- PROVA REAL ---------- */}
       <section className="section proof">
         <div className="container">
@@ -165,8 +185,8 @@ export default function Page() {
               <figcaption><b>Fone Anker soundcore</b><span className="badge">−37% + cupom</span></figcaption>
             </figure>
             <figure className="proofCard reveal" style={{ transitionDelay: "90ms" }}>
-              <img src="/prova-2.jpg" alt="Membro com o produto que comprou pelo grupo" loading="lazy" />
-              <figcaption><b>Recebeu o achadinho</b><span className="badge">direto no Zap</span></figcaption>
+              <img src="/prova-3.jpg" alt="Membro com a air fryer que comprou pelo grupo" loading="lazy" />
+              <figcaption><b>Air Fryer Mondial</b><span className="badge">−42% + cupom</span></figcaption>
             </figure>
             <div className="proofPitch reveal" style={{ transitionDelay: "150ms" }}>
               <h3>Do grupo pra sua casa 📦</h3>
@@ -203,6 +223,17 @@ export default function Page() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ---------- BANNER COM FOTO DE FUNDO ---------- */}
+      <section className="bgBanner">
+        <div className="bgOverlay" />
+        <div className="container bgBannerIn reveal">
+          <span className="pill light"><span className="dot" /> Novidades toda hora</span>
+          <h2>Todo dia tem coisa nova chegando 📦</h2>
+          <p>Enquanto você lê isso, já tem achadinho novo rolando lá no grupo.</p>
+          <CTA big pulse>Quero entrar agora</CTA>
         </div>
       </section>
 
@@ -381,6 +412,24 @@ export default function Page() {
         .benefit h3 { font-size: 18px; margin: 14px 0 8px; }
         .benefit p { color: var(--muted); font-size: 14.5px; line-height: 1.5; margin: 0; }
 
+        /* ---- PEEK (grupo por dentro) ---- */
+        .peek { background: radial-gradient(circle at 25% 15%, #2a2013, #17130c 62%); color: #fff; padding: 70px 0; }
+        .peekIn { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; align-items: center; }
+        .peekImg { display: flex; justify-content: center; }
+        .peekImg img { width: 100%; max-width: 290px; border-radius: 26px; box-shadow: 0 30px 70px rgba(0,0,0,.55); }
+        .peekTxt h2 { color: #fff; }
+        .peekTxt p { color: #cfc6b8; font-size: 17px; line-height: 1.55; margin: 14px 0 18px; }
+        .eyebrow.dark { background: #3a2f16; color: #ffcf5a; }
+        .ticks.light li { color: #ece4d6; }
+
+        /* ---- BANNER COM FOTO DE FUNDO ---- */
+        .bgBanner { position: relative; background: #17130c url('/unbox.jpg') center 28% / cover no-repeat; padding: 92px 0; text-align: center; overflow: hidden; }
+        .bgOverlay { position: absolute; inset: 0; background: linear-gradient(115deg, rgba(18,13,7,.86) 28%, rgba(18,13,7,.42)); }
+        .bgBannerIn { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+        .bgBanner h2 { color: #fff; font-size: clamp(26px, 4.5vw, 40px); margin-top: 14px; }
+        .bgBanner p { color: #ffe6c9; font-size: 18px; margin: 12px 0 26px; }
+        .pill.light { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.28); color: #fff; box-shadow: none; }
+
         /* ---- FAQ ---- */
         .faqSec { background: #fff; border-top: 1px solid var(--line); }
         .faq { display: grid; gap: 12px; }
@@ -417,6 +466,9 @@ export default function Page() {
           .proofGrid { grid-template-columns: 1fr 1fr; }
           .proofPitch { grid-column: 1 / -1; }
           .benefits { grid-template-columns: 1fr 1fr; }
+          .peekIn { grid-template-columns: 1fr; gap: 28px; }
+          .peekImg img { max-width: 240px; }
+          .bgBanner { padding: 70px 0; }
         }
         @media (max-width: 560px) {
           .hero { padding: 30px 0 10px; }
