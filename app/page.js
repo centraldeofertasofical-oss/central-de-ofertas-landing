@@ -57,14 +57,13 @@ export default function Page() {
     return () => io.disconnect();
   }, []);
 
-  const CTA = ({ children = "Entrar no grupo grátis", big = false, ghost = false }) => (
+  const CTA = ({ children = "Entrar no grupo grátis", big = false, ghost = false, pulse = false }) => (
     <a
       href={WHATSAPP_GROUP_URL}
       onClick={irProGrupo}
-      className={"cta" + (big ? " big" : "") + (ghost ? " ghost" : "")}
+      className={"cta" + (big ? " big" : "") + (ghost ? " ghost" : "") + (pulse ? " pulse" : "")}
     >
-      <WppIcon size={big ? 24 : 20} />
-      {children}
+      <span className="ctaIn"><WppIcon size={big ? 24 : 20} />{children}</span>
     </a>
   );
 
@@ -92,7 +91,7 @@ export default function Page() {
               <b> Grátis, sem spam, e você sai quando quiser.</b>
             </p>
             <div className="heroCtas">
-              <CTA big>Entrar no grupo grátis</CTA>
+              <CTA big pulse>Entrar no grupo grátis</CTA>
             </div>
             <div className="trustRow">
               <div className="stars" aria-hidden>★★★★★</div>
@@ -103,12 +102,12 @@ export default function Page() {
           <div className="heroImg reveal">
             <img src="/hero.jpg" alt="Pessoa feliz com vários produtos que comprou em promoção" loading="eager" />
             <div className="floatCard fc1">
-              <span className="off">−62%</span>
-              <div><b>Furadeira Mondial</b><small>R$ 107,91</small></div>
+              <span className="off">−70%</span>
+              <div><b>Achados do dia</b><small>as maiores quedas</small></div>
             </div>
             <div className="floatCard fc2">
-              <span className="tag">🎟️ Cupom</span>
-              <div><b>LEVE20</b><small>desconto extra</small></div>
+              <span className="tag">🎟️</span>
+              <div><b>Cupom LEVE20</b><small>desconto extra</small></div>
             </div>
           </div>
         </div>
@@ -148,7 +147,7 @@ export default function Page() {
               </div>
             ))}
           </div>
-          <div className="center reveal"><CTA /></div>
+          <div className="center reveal"><CTA big pulse /></div>
         </div>
       </section>
 
@@ -177,7 +176,7 @@ export default function Page() {
                 <li>Cupons que baixam ainda mais</li>
                 <li>Sem produto repetido, sem enrolação</li>
               </ul>
-              <CTA />
+              <CTA pulse />
             </div>
           </div>
         </div>
@@ -236,7 +235,7 @@ export default function Page() {
           <div className="finalBox reveal">
             <h2>Bora economizar de verdade?</h2>
             <p>Entra agora e já pega os achados de hoje. É grátis. 💛</p>
-            <CTA big>Entrar no grupo grátis</CTA>
+            <CTA big pulse>Entrar no grupo grátis</CTA>
             <span className="micro">grátis · sem spam · sair quando quiser</span>
           </div>
         </div>
@@ -274,16 +273,29 @@ export default function Page() {
 
       <style jsx>{`
         /* ---- CTA ---- */
-        .cta { display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-          background: linear-gradient(180deg, #2bE06e, var(--wpp-d)); color: #04220f; text-decoration: none;
-          font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 16px;
-          padding: 14px 22px; border-radius: 14px; border: 1.5px solid rgba(255,255,255,.4);
+        .cta { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+          background: linear-gradient(180deg, #2be06e, var(--wpp-d)); color: #04220f; text-decoration: none;
+          font-family: var(--font-display), sans-serif; font-weight: 800; font-size: 16px;
+          padding: 14px 22px; border-radius: 14px; border: 2px solid rgba(255,255,255,.55);
           box-shadow: 0 10px 26px rgba(37,211,102,.32); transition: transform .14s ease, box-shadow .14s ease; white-space: nowrap; }
-        .cta:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(37,211,102,.4); }
+        .ctaIn { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 9px; }
+        .cta:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(37,211,102,.45); }
         .cta:active { transform: translateY(0) scale(.98); }
-        .cta.big { font-size: 18px; padding: 18px 30px; border-radius: 16px; }
+        .cta.big { font-size: 19px; padding: 20px 34px; border-radius: 18px; }
         .cta.small { padding: 10px 16px; font-size: 14px; border-radius: 11px; box-shadow: 0 6px 16px rgba(37,211,102,.3); }
         .cta.ghost { background: #fff; color: var(--ink); border-color: var(--line); box-shadow: var(--shadow); }
+
+        /* botão em destaque: pulsa + anel de brilho + shine passando */
+        .cta.pulse { animation: ctaPulse 1.7s ease-in-out infinite; }
+        @keyframes ctaPulse {
+          0%, 100% { transform: scale(1); box-shadow: 0 12px 30px rgba(37,211,102,.45), 0 0 0 0 rgba(37,211,102,.5); }
+          50% { transform: scale(1.045); box-shadow: 0 22px 48px rgba(37,211,102,.6), 0 0 0 16px rgba(37,211,102,0); }
+        }
+        .cta.pulse:hover { transform: scale(1.05); }
+        .cta.pulse::after { content: ""; position: absolute; top: 0; left: 0; width: 55%; height: 100%; z-index: 1; pointer-events: none;
+          background: linear-gradient(100deg, transparent, rgba(255,255,255,.6), transparent);
+          transform: skewX(-18deg) translateX(-160%); animation: ctaShine 2.6s ease-in-out infinite; }
+        @keyframes ctaShine { 0% { transform: skewX(-18deg) translateX(-160%); } 55%, 100% { transform: skewX(-18deg) translateX(360%); } }
 
         /* ---- NAV ---- */
         .nav { position: sticky; top: 0; z-index: 50; background: rgba(250,246,238,.82); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
@@ -316,10 +328,10 @@ export default function Page() {
           padding: 11px 14px; border-radius: 14px; box-shadow: var(--shadow); }
         .floatCard b { display: block; font-size: 13.5px; font-weight: 700; line-height: 1.1; }
         .floatCard small { color: var(--muted); font-size: 12px; }
-        .fc1 { left: -18px; bottom: 40px; }
+        .fc1 { left: -16px; top: 30px; }
         .fc1 .off { background: var(--orange); color: #fff; font-weight: 800; font-size: 13px; padding: 6px 9px; border-radius: 9px; }
-        .fc2 { right: -14px; top: 30px; }
-        .fc2 .tag { background: #fff4cf; color: #7a5a00; font-weight: 700; font-size: 12px; padding: 6px 9px; border-radius: 9px; border: 1px solid #ffe38a; }
+        .fc2 { right: -14px; bottom: 30px; }
+        .fc2 .tag { font-size: 18px; }
 
         /* ---- STORES STRIP ---- */
         .stores { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px 26px; margin: 44px 0 0;
@@ -412,10 +424,16 @@ export default function Page() {
           .proofGrid { grid-template-columns: 1fr; }
           .proofCard img { height: 300px; }
           .benefits { grid-template-columns: 1fr; }
-          .fc1 { left: 8px; bottom: 12px; }
-          .fc2 { right: 8px; top: 12px; }
+          .fc1 { left: 8px; top: 10px; }
+          .fc2 { right: 8px; bottom: 10px; }
           .navIn .cta.small { padding: 9px 13px; }
           .brandTxt { font-size: 16px; }
+          .cta.big { width: 100%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .cta.pulse { animation: none; }
+          .cta.pulse::after { display: none; }
+          .dot { animation: none; }
         }
       `}</style>
     </main>
