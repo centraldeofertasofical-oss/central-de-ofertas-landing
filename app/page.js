@@ -271,7 +271,7 @@ export default function Page() {
         @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
       `}</style>
 
-      <style jsx>{`
+      <style jsx global>{`
         /* ---- CTA ---- */
         .cta { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
           background: linear-gradient(180deg, #2be06e, var(--wpp-d)); color: #04220f; text-decoration: none;
@@ -340,14 +340,14 @@ export default function Page() {
         .storeList { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 22px; }
         .storeList b { font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 19px; opacity: .85; }
         .s-amz { color: #ff9900; text-transform: lowercase; }
-        .s-ml { color: #ffc400; }
+        .s-ml { color: #cc8800; }
         .s-shp { color: #ee4d2d; }
         .s-cup { color: #3d372e; font-size: 16px; }
 
         /* ---- SECTIONS ---- */
         .section { padding: 68px 0; }
         .head { text-align: center; max-width: 640px; margin: 0 auto 40px; }
-        .eyebrow { display: inline-block; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); background: #fff2e4; padding: 5px 12px; border-radius: 999px; }
+        .eyebrow { display: inline-block; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #a8410c; background: #ffe9d6; padding: 5px 12px; border-radius: 999px; }
         h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 700; margin: 14px 0 0; }
         .head p { color: var(--muted); font-size: 17px; margin: 12px 0 0; line-height: 1.5; }
         .center { text-align: center; margin-top: 40px; }
