@@ -1,10 +1,29 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { sendEvent } from "../lib/tracking";
 
 const INVITE_CODE = "K7y2RlgUuAc0Xepn0qHYBD";
 const WHATSAPP_GROUP_URL = `https://chat.whatsapp.com/${INVITE_CODE}`;
+
+// nomes p/ os balões "fulano acabou de entrar" — embaralhados a cada carregamento,
+// sem repetir na mesma visita (refresh mostra nomes/ordem diferentes).
+const NOMES = [
+  "Fábio", "Patrícia", "Lucas", "Amanda", "Rodrigo", "Juliana", "Bruno", "Carla", "Thiago", "Fernanda",
+  "Rafael", "Aline", "Gustavo", "Camila", "Felipe", "Beatriz", "Diego", "Larissa", "Marcelo", "Vanessa",
+  "André", "Priscila", "Leonardo", "Tatiane", "Vinícius", "Bruna", "Renato", "Sabrina", "Eduardo", "Débora",
+  "Márcio", "Letícia", "Gabriel", "Natália", "Rogério", "Simone", "Wesley", "Michele", "Anderson", "Jéssica",
+  "Cristiano", "Adriana", "Douglas", "Karina", "Fabiano", "Roberta", "Alexandre", "Viviane", "Igor", "Elaine",
+  "Otávio", "Sandra", "Caio", "Renata", "Murilo", "Daniela", "Everton", "Cláudia", "Ricardo", "Luana",
+  "Sérgio", "Mariana", "Paulo", "Bianca", "Hélio", "Rosana", "Nelson", "Tainá", "Wagner", "Priscilla",
+  "Matheus", "Isabela", "Cauã", "Yasmin", "Emerson", "Milena", "Fabrício", "Raquel", "Jonas", "Sheila",
+];
+
+function embaralhar(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
 
 function LogoMark() {
   return (
@@ -29,6 +48,22 @@ function WppIcon({ size = 22 }) {
 
 export default function Page() {
   const foi = useRef(false);
+  const [entrou, setEntrou] = useState(null);
+
+  // balões "fulano acabou de entrar" — nomes aleatórios sem repetir na visita
+  useEffect(() => {
+    let pool = embaralhar(NOMES);
+    let idx = 0;
+    let tHide, tNext;
+    const proximo = () => {
+      if (idx >= pool.length) { pool = embaralhar(NOMES); idx = 0; }
+      setEntrou({ nome: pool[idx++], key: Date.now() });
+      tHide = setTimeout(() => setEntrou(null), 3800);
+      tNext = setTimeout(proximo, 4600 + Math.random() * 2400);
+    };
+    const tStart = setTimeout(proximo, 1500);
+    return () => { clearTimeout(tStart); clearTimeout(tHide); clearTimeout(tNext); };
+  }, []);
 
   function irProGrupo(e) {
     if (e) e.preventDefault();
@@ -106,6 +141,18 @@ export default function Page() {
             <div className="trustRow">
               <div className="stars" aria-hidden>★★★★★</div>
               <span>Curadoria diária · 3 lojas · 100% grátis</span>
+            </div>
+            <div className="joinSlot" aria-live="polite">
+              {entrou && (
+                <div className="joinToast" key={entrou.key}>
+                  <span className="jAvatar">{entrou.nome.charAt(0)}</span>
+                  <div className="jTxt">
+                    <span><b>{entrou.nome}</b> acabou de entrar 🎉</span>
+                    <small>agora mesmo no grupo</small>
+                  </div>
+                  <span className="jLive" aria-hidden />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -355,6 +402,20 @@ export default function Page() {
         .heroCtas { margin: 30px 0 0; }
         .trustRow { display: flex; align-items: center; gap: 10px; margin: 20px 0 0; font-size: 14px; color: #e8ddca; }
         .stars { color: #ffca3a; letter-spacing: 2px; font-size: 15px; }
+
+        /* balões "fulano acabou de entrar" — prova social no topo */
+        .joinSlot { min-height: 60px; margin-top: 18px; }
+        .joinToast { display: inline-flex; align-items: center; gap: 11px; background: rgba(255,255,255,.97);
+          padding: 9px 16px 9px 9px; border-radius: 999px; box-shadow: 0 14px 34px rgba(0,0,0,.32);
+          animation: joinIn .5s cubic-bezier(.2,.9,.3,1.2) both; }
+        @keyframes joinIn { from { opacity: 0; transform: translateY(14px) scale(.94); } to { opacity: 1; transform: none; } }
+        .jAvatar { width: 38px; height: 38px; border-radius: 50%; flex: none; display: inline-flex; align-items: center; justify-content: center;
+          font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 16px; color: #fff; background: linear-gradient(135deg, #ffb43a, #f47420); }
+        .jTxt { display: flex; flex-direction: column; line-height: 1.2; }
+        .jTxt > span { font-size: 14.5px; color: var(--ink); }
+        .jTxt b { font-weight: 700; }
+        .jTxt small { font-size: 11.5px; color: #12b85a; font-weight: 600; }
+        .jLive { width: 8px; height: 8px; border-radius: 50%; background: var(--wpp); animation: pulse 1.6s ease-in-out infinite; margin-left: 2px; }
 
         /* selos flutuantes sobre o hero (canto inferior direito, longe do rosto) */
         .floatCard { position: absolute; z-index: 3; display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid rgba(0,0,0,.05);
