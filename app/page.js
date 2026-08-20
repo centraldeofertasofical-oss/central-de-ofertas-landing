@@ -79,8 +79,18 @@ export default function Page() {
         </div>
       </header>
 
-      {/* ---------- HERO ---------- */}
+      {/* ---------- HERO (foto de fundo) ---------- */}
       <section className="hero">
+        <div className="heroBg" aria-hidden />
+        <div className="heroShade" aria-hidden />
+        <div className="floatCard fc1">
+          <span className="off">−70%</span>
+          <div><b>Achados do dia</b><small>as maiores quedas</small></div>
+        </div>
+        <div className="floatCard fc2">
+          <span className="tag">🎟️</span>
+          <div><b>Cupom LEVE20</b><small>desconto extra</small></div>
+        </div>
         <div className="container heroIn">
           <div className="heroTxt reveal">
             <span className="pill"><span className="dot" /> Grupo oficial no WhatsApp</span>
@@ -98,21 +108,11 @@ export default function Page() {
               <span>Curadoria diária · 3 lojas · 100% grátis</span>
             </div>
           </div>
-
-          <div className="heroImg reveal">
-            <img src="/hero.jpg" alt="Pessoa feliz com vários produtos que comprou em promoção" loading="eager" />
-            <div className="floatCard fc1">
-              <span className="off">−70%</span>
-              <div><b>Achados do dia</b><small>as maiores quedas</small></div>
-            </div>
-            <div className="floatCard fc2">
-              <span className="tag">🎟️</span>
-              <div><b>Cupom LEVE20</b><small>desconto extra</small></div>
-            </div>
-          </div>
         </div>
+      </section>
 
-        {/* faixa de lojas */}
+      {/* faixa de lojas */}
+      <div className="storesWrap">
         <div className="container">
           <div className="stores reveal">
             <span>Ofertas selecionadas de:</span>
@@ -124,7 +124,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* ---------- COMO FUNCIONA ---------- */}
       <section className="section" id="como">
@@ -155,7 +155,9 @@ export default function Page() {
       <section className="peek">
         <div className="container peekIn">
           <div className="peekImg reveal">
-            <img src="/mockup.jpg" alt="Tela do grupo no WhatsApp com uma oferta real" loading="lazy" />
+            <div className="phone">
+              <video src="/grupo-video.mp4" poster="/grupo-poster.jpg" autoPlay muted loop playsInline preload="metadata" />
+            </div>
           </div>
           <div className="peekTxt reveal">
             <span className="eyebrow dark">Por dentro do grupo</span>
@@ -336,37 +338,38 @@ export default function Page() {
         .brandTxt { font-family: var(--font-display), sans-serif; font-weight: 500; font-size: 18px; letter-spacing: -.02em; }
         .brandTxt b { font-weight: 700; }
 
-        /* ---- HERO ---- */
-        .hero { padding: 46px 0 20px; position: relative; }
-        .hero::before { content: ""; position: absolute; top: -140px; right: -120px; width: 520px; height: 520px; border-radius: 50%;
-          background: radial-gradient(circle, rgba(255,196,0,.32), transparent 70%); z-index: 0; pointer-events: none; }
-        .heroIn { display: grid; grid-template-columns: 1.05fr .95fr; gap: 46px; align-items: center; position: relative; z-index: 1; }
-        .pill { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line);
-          padding: 7px 14px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: #3d372e; box-shadow: var(--shadow); }
-        .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--wpp); box-shadow: 0 0 0 4px rgba(37,211,102,.2); animation: pulse 1.8s ease-in-out infinite; }
+        /* ---- HERO (foto de fundo) ---- */
+        .hero { position: relative; min-height: 90vh; display: flex; align-items: center; overflow: hidden; padding: 92px 0 64px; }
+        .heroBg { position: absolute; inset: 0; z-index: 0; background: url('/hero.jpg') center 28% / cover no-repeat; }
+        .heroShade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(100deg, rgba(10,7,2,.92) 0%, rgba(10,7,2,.74) 38%, rgba(10,7,2,.3) 74%, rgba(10,7,2,.05) 100%); }
+        .heroIn { position: relative; z-index: 3; }
+        .heroTxt { max-width: 640px; }
+        .pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.3);
+          padding: 7px 14px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: #fff; backdrop-filter: blur(6px); }
+        .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--wpp); box-shadow: 0 0 0 4px rgba(37,211,102,.25); animation: pulse 1.8s ease-in-out infinite; }
         @keyframes pulse { 50% { box-shadow: 0 0 0 8px rgba(37,211,102,0); } }
-        h1 { font-size: clamp(30px, 5vw, 50px); font-weight: 700; line-height: 1.06; margin: 18px 0 0; }
-        .hl { color: var(--orange); }
-        .lead { margin: 20px 0 0; font-size: 18px; line-height: 1.55; color: var(--muted); max-width: 34ch; }
-        .lead b { color: var(--ink); }
-        .heroCtas { margin: 28px 0 0; }
-        .trustRow { display: flex; align-items: center; gap: 10px; margin: 18px 0 0; font-size: 14px; color: var(--muted); }
-        .stars { color: var(--yellow-d); letter-spacing: 2px; font-size: 15px; }
+        .hero h1 { font-size: clamp(32px, 5.2vw, 54px); font-weight: 700; line-height: 1.05; margin: 18px 0 0; color: #fff; }
+        .hl { color: #ffb43a; }
+        .hero .lead { margin: 20px 0 0; font-size: 18px; line-height: 1.55; color: #f0e7d8; max-width: 42ch; }
+        .hero .lead b { color: #fff; }
+        .heroCtas { margin: 30px 0 0; }
+        .trustRow { display: flex; align-items: center; gap: 10px; margin: 20px 0 0; font-size: 14px; color: #e8ddca; }
+        .stars { color: #ffca3a; letter-spacing: 2px; font-size: 15px; }
 
-        .heroImg { position: relative; }
-        .heroImg img { width: 100%; height: auto; border-radius: 24px; display: block; box-shadow: 0 30px 60px rgba(60,40,10,.18); border: 5px solid #fff; }
-        .floatCard { position: absolute; display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--line);
-          padding: 11px 14px; border-radius: 14px; box-shadow: var(--shadow); }
-        .floatCard b { display: block; font-size: 13.5px; font-weight: 700; line-height: 1.1; }
+        /* selos flutuantes sobre o hero (canto inferior direito, longe do rosto) */
+        .floatCard { position: absolute; z-index: 3; display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid rgba(0,0,0,.05);
+          padding: 11px 14px; border-radius: 14px; box-shadow: 0 14px 34px rgba(0,0,0,.35); }
+        .floatCard b { display: block; font-size: 13.5px; font-weight: 700; line-height: 1.1; color: var(--ink); }
         .floatCard small { color: var(--muted); font-size: 12px; }
-        .fc1 { left: -16px; top: 30px; }
+        .fc1 { right: 6%; bottom: 30%; }
         .fc1 .off { background: var(--orange); color: #fff; font-weight: 800; font-size: 13px; padding: 6px 9px; border-radius: 9px; }
-        .fc2 { right: -14px; bottom: 30px; }
+        .fc2 { right: 6%; bottom: 13%; }
         .fc2 .tag { font-size: 18px; }
 
         /* ---- STORES STRIP ---- */
-        .stores { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px 26px; margin: 44px 0 0;
-          padding: 18px; background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+        .storesWrap { position: relative; z-index: 5; margin-top: -34px; }
+        .stores { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px 26px; margin: 0;
+          padding: 18px; background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 18px 44px rgba(60,40,10,.14); }
         .stores > span { color: var(--muted); font-size: 14px; }
         .storeList { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 22px; }
         .storeList b { font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 19px; opacity: .85; }
@@ -416,7 +419,8 @@ export default function Page() {
         .peek { background: radial-gradient(circle at 25% 15%, #2a2013, #17130c 62%); color: #fff; padding: 70px 0; }
         .peekIn { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; align-items: center; }
         .peekImg { display: flex; justify-content: center; }
-        .peekImg img { width: 100%; max-width: 290px; border-radius: 26px; box-shadow: 0 30px 70px rgba(0,0,0,.55); }
+        .phone { width: 100%; max-width: 280px; border-radius: 34px; padding: 9px; background: #0a0a0a; border: 1px solid #2a2418; box-shadow: 0 30px 70px rgba(0,0,0,.6); }
+        .phone video { width: 100%; display: block; border-radius: 26px; background: #000; }
         .peekTxt h2 { color: #fff; }
         .peekTxt p { color: #cfc6b8; font-size: 17px; line-height: 1.55; margin: 14px 0 18px; }
         .eyebrow.dark { background: #3a2f16; color: #ffcf5a; }
@@ -460,24 +464,23 @@ export default function Page() {
 
         /* ---- RESPONSIVE ---- */
         @media (max-width: 900px) {
-          .heroIn { grid-template-columns: 1fr; gap: 30px; }
-          .heroImg { order: -1; }
-          .lead { max-width: none; }
+          .hero { min-height: 76vh; }
+          .hero .lead { max-width: none; }
+          .floatCard { display: none; }
           .proofGrid { grid-template-columns: 1fr 1fr; }
           .proofPitch { grid-column: 1 / -1; }
           .benefits { grid-template-columns: 1fr 1fr; }
           .peekIn { grid-template-columns: 1fr; gap: 28px; }
-          .peekImg img { max-width: 240px; }
+          .phone { max-width: 230px; }
           .bgBanner { padding: 70px 0; }
         }
         @media (max-width: 560px) {
-          .hero { padding: 30px 0 10px; }
+          .hero { min-height: 84vh; padding: 76px 0 40px; }
+          .hero h1 { font-size: 32px; }
           .steps { grid-template-columns: 1fr; }
           .proofGrid { grid-template-columns: 1fr; }
           .proofCard img { height: 300px; }
           .benefits { grid-template-columns: 1fr; }
-          .fc1 { left: 8px; top: 10px; }
-          .fc2 { right: 8px; bottom: 10px; }
           .navIn .cta.small { padding: 9px 13px; }
           .brandTxt { font-size: 16px; }
           .cta.big { width: 100%; }
